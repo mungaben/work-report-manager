@@ -7,6 +7,7 @@ import AnalyticCards from './AnalyticCards'
 import CenterCard from './CenterCard'
 import ActivityFeed from './ActivityFeed'
 import SearchBar from './SearchBar'
+import Message from '../Messages/Message'
 
 const Dash = () => {
   return (
@@ -19,15 +20,18 @@ const Dash = () => {
                 <SearchBar/>
             </div>
         </nav>
-        <div>
+        <div className=' md:mx-4  my-4  flex'>
             <AnalyticCards/>
         </div>
         <div>
             <CenterCard/>
         </div>
-        <div>
-            <div>
+        <div className=' w-full flex flex-row justify-between items-center '>
+            <div className=' w-3/5 flex items-center'>
                 <ActivityFeed/>
+            </div>
+            <div className='w-2/5 flex items-center '>
+                <Message/>
             </div>
         </div>
     </div>
