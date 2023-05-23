@@ -24,7 +24,7 @@ const SearchBar = () => {
     console.log(watch("search")) // watch input value by passing the name of it
     return (
         <>
-            <div className="flex flex-row justify-center  items-center top-4 rounded-md transition  bg-green-500 ">
+            <div className="flex flex-row justify-center  items-center top-4 rounded-md transition  p-4">
                 <div className=' font-[12px] w-full text-[#333333] ' >
                     <form onSubmit={handleSubmit(onSubmit)} className=' flex first-letter:items-center '>
 

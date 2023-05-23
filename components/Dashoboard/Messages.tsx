@@ -59,17 +59,17 @@ const Messages = () => {
            height={50}
            className=' rounded-full border-[1px] border-[#333333]  m-2'
            />
-           <div className=' flex flex-col items-center justify-center '>
+           <div className=' flex flex-col items-start justify-center  flex-1'>
             <h3 className='font-[18px]  text-[#333333] ' >
                 work Title
             </h3>
             <p  className=' font-[12px] text-[#333333] ' >
-           Kudos!
+           Kudos! Lorem ipsum dolor sit amet consectetur
             </p>
 
            </div>
-           <div className=' flex items-center justify-center right-2'>
-            <AiFillEye color='#37CB87'/> 
+           <div className=' flex items-center justify-center mx-3   '>
+            <AiFillEye color='#37CB87' size={25} /> 
            </div>
         </div>
 

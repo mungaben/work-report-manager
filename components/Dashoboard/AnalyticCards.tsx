@@ -37,17 +37,17 @@ const AnalyticCards = () => {
 
                 </div>
                 <div className=' w-full  flex justify-end relative '>
-                  
-                    <div className=' w-13 h-13  '>
-                    <div className=' absolute left-24 top-9 '>
-                        <p className=' text-[#333333]  text-xs flex justify-center items-center pt-2 mx-auto'>
-                            74%
-                        </p>
 
+                    <div className=' w-13 h-13  '>
+                        <div className=' absolute left-24 top-9 '>
+                            <p className=' text-[#333333]  text-xs flex justify-center items-center pt-2 mx-auto'>
+                                74%
+                            </p>
+
+                        </div>
+                        <Doughnut data={Dougnaut} height={90} width={90} />
                     </div>
-                    <Doughnut data={Dougnaut} height={90} width={90} />
-                    </div>
-                   
+
                 </div>
 
 
@@ -80,18 +80,18 @@ const AnalyticCards = () => {
                     </div>
                 </div>
                 <div className=' w-full  flex justify-end relative '>
-                  
-                  <div className=' w-13 h-13  '>
-                  <div className=' absolute left-[85px] top-9 '>
-                      <p className=' text-[#333333]  text-xs flex justify-center items-center pt-2 mx-auto'>
-                          74%
-                      </p>
 
-                  </div>
-                  <Doughnut data={Dougnaut} height={90} width={90} />
-                  </div>
-                 
-              </div>
+                    <div className=' w-13 h-13  '>
+                        <div className=' absolute left-[85px] top-9 '>
+                            <p className=' text-[#333333]  text-xs flex justify-center items-center pt-2 mx-auto'>
+                                74%
+                            </p>
+
+                        </div>
+                        <Doughnut data={Dougnaut} height={90} width={90} />
+                    </div>
+
+                </div>
 
 
             </div>
@@ -123,18 +123,18 @@ const AnalyticCards = () => {
                     </div>
                 </div>
                 <div className=' w-full  flex justify-end relative '>
-                  
-                  <div className=' w-13 h-13  '>
-                  <div className=' absolute left-[35px] top-9 '>
-                      <p className=' text-[#333333]  text-xs flex justify-center items-center pt-2 mx-auto'>
-                          74%
-                      </p>
 
-                  </div>
-                  <Doughnut data={Dougnaut} height={90} width={90} />
-                  </div>
-                 
-              </div>
+                    <div className=' w-13 h-13  '>
+                        <div className=' absolute left-[35px] top-9 '>
+                            <p className=' text-[#333333]  text-xs flex justify-center items-center pt-2 mx-auto'>
+                                74%
+                            </p>
+
+                        </div>
+                        <Doughnut data={Dougnaut} height={90} width={90} />
+                    </div>
+
+                </div>
 
 
             </div>
