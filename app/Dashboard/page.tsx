@@ -1,8 +1,11 @@
+import Dash from '@/components/Dashoboard/Dash'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>page</div>
+    <div>
+        <Dash/>
+    </div>
   )
 }
 

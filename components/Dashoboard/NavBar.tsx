@@ -3,21 +3,21 @@
 import React from 'react'
 
 const NavBar = () => {
-    const name ="Emma"
-  return (
+    const name = "Emma"
+    return (
 
 
-    <div className=' flex flex-col p-4 justify-start items-center'>
-        <h2 className=' font-sans  font-[23px]'>
-Dashboard
-        </h2>
-        <h5 className=' font-[12px]' >
-        Hello,{name}. Welcome to the dashboard.
+        <div className=' flex flex-col p-4 justify-start '>
+            <h2 className=' font-sans text-3xl font-[23px]'>
+                Dashboard
+            </h2>
+            <h5 className=' font-[12px]' >
+                Hello,{name}. Welcome to the dashboard.
 
-        </h5>
+            </h5>
 
-    </div>
-  )
+        </div>
+    )
 }
 
 export default NavBar

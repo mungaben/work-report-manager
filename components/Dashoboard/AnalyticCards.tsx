@@ -28,7 +28,7 @@ const AnalyticCards = () => {
                
 
             </div>
-            <div>
+            <div className=' flex flex-row items-center justify-start bg-[#fafafafa]' >
                 <div>
                    <div>
                     <h3>
@@ -53,7 +53,7 @@ const AnalyticCards = () => {
                
 
             </div>
-            <div>
+            <div className=' flex flex-row items-center justify-start bg-[#fafafafa]'>
                 <div>
                    <div>
                     <h3>
