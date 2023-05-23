@@ -8,6 +8,7 @@ import CenterCard from './CenterCard'
 import ActivityFeed from './ActivityFeed'
 import SearchBar from './SearchBar'
 import Message from '../Messages/Message'
+import Messages from './Messages'
 
 const Dash = () => {
   return (
@@ -31,7 +32,7 @@ const Dash = () => {
                 <ActivityFeed/>
             </div>
             <div className='w-2/5 flex items-center '>
-                <Message/>
+                <Messages/>
             </div>
         </div>
     </div>
