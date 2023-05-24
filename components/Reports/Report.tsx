@@ -10,7 +10,7 @@ import Table from './Table'
 
 const Report = () => {
   return (
-    <div>
+    <div className=' w-full'>
      <Table/>
     </div>
   )
