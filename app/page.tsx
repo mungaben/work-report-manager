@@ -25,7 +25,7 @@ export default function Home() {
     <div className=' w-3/6 bg-gradient-to-r from-[#fafafa] to-[#fafafa] h-full shadow-md rounded-sm m-4'>
     <Dash/>
     </div>
-    <div className=' w-1/5  bg-gradient-to-r from-[#fafafa] to-[#fafafa] shadow-md'>
+    <div className=' w-1/5  bg-gradient-to-r from-[#fafafa] to-[#fafafa] shadow-md flex  justify-center top-5'>
       <RightBar/>
     </div>
 
