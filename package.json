@@ -24,6 +24,7 @@
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
     "faker": "^6.6.6",
+    "flowbite": "^1.6.5",
     "next": "13.4.3",
     "next-auth": "^4.22.1",
     "postcss": "8.4.23",
