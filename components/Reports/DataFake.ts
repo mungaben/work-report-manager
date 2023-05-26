@@ -23,6 +23,9 @@
 import { faker } from '@faker-js/faker';
 type MyDataType =
  {
+    targetValue(targetValue: any): unknown;
+    targetvalue(targetvalue: any): unknown;
+    targetname: any;
     id: string;
     from: string|Date;
     to: string|Date;
