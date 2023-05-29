@@ -4,6 +4,7 @@
 
 import React from 'react'
 import Image from 'next/image';
+
 export const data = [
   {
     "id": 1,
@@ -22,10 +23,10 @@ export const data = [
 ]
 
 
-const Messages = () => {
+const Recent = () => {
   return (
-    <div className=' w-full flex flex-col  transition  justify-start ml-5  '>
-      <div className='text-[#333333]/90 text-4xl  text-start  p-2 hover:underline font-semibold m-4 -ml-5 justify-start items-center  '>Message</div>
+    <div className=' w-full flex flex-col  transition  justify-start md:ml-5  '>
+      <div className='text-[#333333]/90 text-4xl -ml-5  text-start  p-2 hover:underline font-semibold m-4 justify-start items-center  '>Recent</div>
       <div className=' w-full flex justify-start flex-col '>
         {data.map((item) => (
           <div key={item.id} className='transition  flex-1 justify-start   p-1 mx-5 pr-5 space-y-5 my-3'>
@@ -58,4 +59,4 @@ const Messages = () => {
   )
 }
 
-export default Messages
+export default Recent

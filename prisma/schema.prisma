@@ -10,11 +10,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model User {
-  id       String @id @default(uuid())
+  id       String   @id @default(uuid())
   name     String
-  email    String @unique
+  email    String   @unique
   password String
+  role     Role     @default(USER)
+  Reports  Report[]
+}
+
+model Report {
+  id            String  @id @default(uuid())
+  Basis2        Int
+  Interface     Int
+  cms           Int
+  spms          Int
+  newperpay     Int
+  oldperpay     Int
+  utilitymaster Int
+  internet      Int
+  exchangemail  Int
+  comments      String?
+  author        User?   @relation(fields: [authorId], references: [id])
+  authorId      String?
+}
+
+enum Role {
+  USER
+  ADMIN
 }

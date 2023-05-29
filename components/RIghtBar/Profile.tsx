@@ -13,7 +13,7 @@ const profile = () => {
       width={70}
       height={70}
       alt="profile"
-      className="rounded-full ring-4 ring-white  border-2 border-white hover:ring-white hover:border-[#333333] hover:bg-[#F5F5F5] w-full h-full p-8"
+      className="rounded-full items-center justify-center ring-4 ring-white  border-2 border-white hover:ring-white hover:border-[#333333] hover:bg-[#F5F5F5] w-full h-full p-8"
       />
       <div>
         <h4 className=' flex flex-col items-center justify-center'>

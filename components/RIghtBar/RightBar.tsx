@@ -1,16 +1,20 @@
 import React from 'react'
 import Profile from './Profile'
 import Messages from './Messages'
+import Recent from './Recent'
 
 const RightBar = () => {
   return (
-    <div className=' w-full  top-5 mt-5 flex justify-center relative   '>
-      <div className=' flex flex-col  justify-center top-0 '>
-        <div className=' w-full flex justify-center items-center  '>
+    <div className=' w-full   '>
+      <div className=' flex flex-col '>
+        <div className=' w-full flex  justify-center items-center mx-4   '>
           <Profile />
         </div>
-        <div className='bg-yellow-500 w-full absolute '>
+        <div className=' w-full  '>
           <Messages />
+        </div>
+        <div>
+          <Recent/>
         </div>
 
       </div>
