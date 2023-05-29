@@ -12,7 +12,7 @@ import Table2 from './Table2'
 const Report = () => {
   return (
     <div className=' w-full'>
-     <Table2/>
+     <Table/>
     </div>
   )
 }

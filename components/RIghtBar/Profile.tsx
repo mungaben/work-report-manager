@@ -16,10 +16,15 @@ const profile = () => {
       className="rounded-full ring-4 ring-white  border-2 border-white hover:ring-white hover:border-[#333333] hover:bg-[#F5F5F5] w-full h-full p-8"
       />
       <div>
-        <h4>
+        <h4 className=' flex flex-col items-center justify-center'>
           {/* name4 under image centred */}
-          <span className=' p-2 mt-2 flex justify-center items-center text-[#333333] text-2xl capitalize hover:underline' >
+          <span className=' p-2 mt-2 flex text-center justify-center items-center text-[#333333] text-2xl capitalize hover:underline' >
             justify  centere name
+          </span>
+          <span >
+            <span className=' p-2 text-[#333333] text-xl capitalize hover:underline justify-center items-center' >
+              DIrector works
+            </span>
           </span>
         </h4>
 

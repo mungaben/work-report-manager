@@ -38,6 +38,7 @@ type MyDataType =
     UTILITYMASTER: number|string;
     INTERNET:number|string,
     EXCHANGEBROWSERMAIL:number|string,
+    COMMENTS:string
     
     // ExchangeBrowserMail:number
   };
@@ -76,7 +77,8 @@ const generateFakeData=  ()  => {
                 OLDPERPAY: faker.number.int({ min: 0, max: 5 }),
                 UTILITYMASTER: faker.number.int({ min: 0, max: 5 }),
                 INTERNET: faker.number.int({ min: 0, max: 5 }),
-                EXCHANGEBROWSERMAIL: faker.number.int({ min: 0, max: 5 })
+                EXCHANGEBROWSERMAIL: faker.number.int({ min: 0, max: 5 }),
+                COMMENTS: faker.lorem.paragraphs(2)
             };
             fakeData.push(data);
         })
