@@ -1,19 +1,11 @@
 
 
-import prisma from "../../../config/prisma"
+import {prisma} from "../../../components/Prisma/Prisma"
 import { NextRequest, NextResponse } from "next/server"
 import Report from '@/components/Reports/Report';
+import { data } from '../../../components/RIghtBar/Messages';
 
-type UserData = {
-    id: string,
-    name: string,
-    email: string,
-    password: string,
-}
-type ReportData = {
-
-}
-
+type paramsType = { params: { id: string } }
 
 
 export async function GET(req: NextRequest, res: NextResponse) {
@@ -61,3 +53,34 @@ catch(error){
    
 }
 }
+
+
+// put request
+
+export async function PUT(req: NextRequest, res: NextResponse) {
+    const body = await req.json()
+    try{
+
+        const  data = await prisma.user.update({
+            where: {
+                id:body.id
+            },
+            data: {
+                name:body.name,
+                email:body.email,
+                password:body.password,
+            }
+        });
+        return NextResponse.json(data)
+    }catch(error){
+        return NextResponse.json(error)
+    }
+    
+}
+
+
+// delete request
+
+
+
+
