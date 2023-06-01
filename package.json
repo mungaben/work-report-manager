@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^8.0.1",
-    "@prisma/client": "^4.14.1",
+    "@prisma/client": "^4.15.0",
     "@types/node": "20.2.3",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
@@ -41,7 +41,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/react-table": "^7.7.14",
-    "prisma": "^4.14.1",
+    "prisma": "^4.15.0",
     "ts-node": "^10.9.1"
   }
 }
