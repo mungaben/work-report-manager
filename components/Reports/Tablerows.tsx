@@ -51,7 +51,7 @@ import { log } from 'console';
 const Tablerows = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<FieldValues>()
     // const datas = useMemo(() => generateFakeData, []);
-    // console.log("data generated", generateFakeData);
+    console.log("data generated", generateFakeData);
     const [datasav, setdatasav] = useState<MyDataType[]>(generateFakeData);
     // console.log("datasav", datasav);
     const [timedatas, settimedatas] = useState(timeData)
@@ -246,7 +246,7 @@ const Tablerows = () => {
         return false
     }
     useEffect(() => {
-        console.log("timedatas", timedatas);
+      
 
 
 

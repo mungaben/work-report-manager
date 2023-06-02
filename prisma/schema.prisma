@@ -11,16 +11,23 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(uuid())
-  name     String
-  email    String   @unique
-  password String
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  Reports  Report[]
+  Reports Report[]
 }
 
 model Report {
-  id            String  @id @default(uuid())
+  id            String   @id @default(uuid())
+  from          String?
+  to            String?
+  date          DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   Basis2        Int
   Interface     Int
   cms           Int
@@ -31,7 +38,7 @@ model Report {
   internet      Int
   exchangemail  Int
   comments      String?
-  author        User?   @relation(fields: [authorId], references: [id])
+  author        User?    @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId      String?
 }
 

@@ -55,7 +55,8 @@ export const applications = [
     'OLD PERPAY',
     'UTILITY MASTER',
     'INTERNET',
-    "Exchange BrowserMail "
+    "Exchange BrowserMail ",
+    'authorid'
 ];
 
 

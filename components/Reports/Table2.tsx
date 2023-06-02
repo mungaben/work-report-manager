@@ -42,18 +42,20 @@ type table2def = {
     targetname: string,
 }
 
-// import { applications } from './FakeData';
-import Table from './Table';
+
+
 import { data } from 'autoprefixer'
-import { set } from 'react-hook-form'
-import { log } from 'console';
+
+import axios from 'axios';
+
 
 const Table2 = () => {
     // const { register, handleSubmit, watch, formState: { errors } }=useForm<FieldValues>()
     // const datas = useMemo(() => generateFakeData, []);
-    // console.log("data generated", generateFakeData);
-    const [datasav, setdatasav] = useState<MyDataType[]>(generateFakeData);
-    // console.log("datasav", datasav);
+    console.log("data generated", generateFakeData);
+    const [datasav, setdatasav] = useState<MyDataType[]>([]);
+    // !datasav && setdatasav(generateFakeData)
+    console.log("datasav", datasav);
     const [timedatas, settimedatas] = useState(timeData)
 
     const [settime, setsettime] = useState("")
@@ -68,8 +70,8 @@ const Table2 = () => {
     const [Comments, setComments] = useState()
     const SavedData = localStorage.getItem("saveData")
     const [disablebtn, setdisablebtn] = useState(false)
-    const [ChagedValue, setChagedValue]= useState<number|undefined>()
-   
+    const [ChagedValue, setChagedValue] = useState<number | undefined>()
+
 
 
 
@@ -77,15 +79,15 @@ const Table2 = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log("handleInputChange", e.target.value);
-        const datachange=Number(e.target.value)
+        const datachange = Number(e.target.value)
         setChagedValue(datachange)
-        const disabled=e.target.disabled
-        console.log("disabl;ed",disabled);
-        
+        const disabled = e.target.disabled
+        console.log("disabl;ed", disabled);
 
 
-       
-        
+
+
+
 
         // get index of row to edit
         const index = datasav?.findIndex((data) => data.id === e.target.id)
@@ -120,7 +122,7 @@ const Table2 = () => {
     // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     //     const lableEvent = event.currentTarget.value;
     //     console.log("handleClick", lableEvent);
-        
+
 
 
     // }
@@ -166,21 +168,21 @@ const Table2 = () => {
 
         console.log("id", id);
         console.log("edit", value);
-        console.log("data avail",datasav);
-        
- const datasavcopy=[...datasav]
- console.log("datasavcopy", datasavcopy);
- 
- 
+        console.log("data avail", datasav);
+
+        const datasavcopy = [...datasav]
+        console.log("datasavcopy", datasavcopy);
+
+
 
         // get index 
         const indextr = datasav?.findIndex((data) => data.id === id)
         console.log("indextr", indextr);
-        if (indextr>=0) {
+        if (indextr >= 0) {
             // Filter data by index value
             const filteredTime = timedatas.filter((data, index) => index !== indextr);
-            const indexedData = datasav.filter((data, index) => data.id !== id ,console.log("filteredTime", data));
-            
+            const indexedData = datasav.filter((data, index) => data.id !== id, console.log("filteredTime", data));
+
 
             console.log("filteredTime", filteredTime);
             console.log("indexedData", indexedData);
@@ -199,12 +201,12 @@ const Table2 = () => {
 
 
     }
-    const handleDisabled=()=>{
-       
+    const handleDisabled = () => {
+
         // console.log("handleDisabled", e.target.value);
         return true
-        
-        
+
+
     }
     const handleComments = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -241,16 +243,33 @@ const Table2 = () => {
 
 
     }
-    const popError=()=>{
-        <Toaster/>
-        return  false
+    const popError = () => {
+        <Toaster />
+        return false
     }
+    // get data from api/Reports/
+    const GetREports = async () => {
+        axios.get("http://localhost:3000/api/Reports").then((res) => {
+            console.log("res", res.data);
+            setdatasav(res.data);
+
+
+
+        });
+
+
+    }
+
+
+
+
     useEffect(() => {
         console.log("timedatas", timedatas);
+        GetREports();
 
 
 
-    }, [timedatas,datasav])
+    }, [])
 
 
     return (
@@ -258,180 +277,184 @@ const Table2 = () => {
 
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <form action="" method="post">
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 
 
-                        <tr className=' '>
-                            <th scope="col" className="p-4">
-                                <div className="flex items-center">
-                                    <input
-                                        id="checkbox-all-search"
-                                        type="checkbox"
-                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                    />
-                                    <label htmlFor="checkbox-all-search" className="sr-only">
-                                        checkbox
-                                    </label>
-                                </div>
-                            </th>
+                            <tr className=' '>
+                                <th scope="col" className="p-4">
+                                    <div className="flex items-center">
+                                        <input
+                                            id="checkbox-all-search"
+                                            type="checkbox"
+                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                        />
+                                        <label htmlFor="checkbox-all-search" className="sr-only">
+                                            checkbox
+                                        </label>
+                                    </div>
+                                </th>
+
+                                {
+                                    applications.map((app, index) => (
+
+                                        <React.Fragment key={index}>
+
+                                            <th scope="col" className="px-6 py-3 text-[#333333]">
+
+                                                {app}
+                                            </th>
+
+
+                                        </React.Fragment>
+                                    ))
+
+                                }
+
+                            </tr>
+
+
+                        </thead>
+                        <tbody>
 
                             {
-                                applications.map((app, index) => (
-
-                                    <React.Fragment key={index}>
-
-                                        <th scope="col" className="px-6 py-3 text-[#333333]">
-
-                                            {app}
-                                        </th>
+                                timedatas.map((data, index) => (
 
 
-                                    </React.Fragment>
-                                ))
+                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200/70 dark:hover:bg-gray-600">
+                                        {/* index col */}
+                                        <td className="w-4 p-4">
+                                            <div className="flex items-center ">
+                                                <input
+                                                    id="checkbox-table-search-1"
+                                                    type="checkbox"
+                                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                />
+                                                <label htmlFor="checkbox-table-search-1" className="sr-only">
+                                                    checkbox
+                                                </label>
+                                            </div>
+                                        </td>
+                                        {/* id cell */}
+                                        <td className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white ">
+                                            <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
+                                                    <input disabled={true} type="text" name="id" id={String(datasav[index]?.id) || undefined} min={0} max={5} maxLength={1} value={index + 1} placeholder={datasav[index]?.id} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
+                                                </span>
+                                            </button>
+                                        </td>
+                                        {/* from cell */}
+                                        <td className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
+                                                    <input disabled={true} type="text" name="from" id={String(datasav[index]?.id) || undefined} value={data} min={0} max={5} maxLength={1} placeholder={String(datasav[index])} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
+                                                </span>
+                                            </button>
+                                        </td>
+                                        {/* to cell */}
+                                        <td className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
+                                                    <input disabled={true} type="text" name="to" id={String(datasav[index]?.id) || undefined} min={0} max={5} maxLength={1} value={index > 5 ? (index + 8 + ": 00 PM") : (index + 8 + ": 00 AM")} placeholder={String(datasav[index]?.from) || undefined} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
 
-                            }
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
+                                                    <input disabled={ChagedValue && ChagedValue > 5 ? true : popError()} type="number" name="Basis2" id={String(datasav[index]?.id) || undefined} min={0} max={5} maxLength={1} placeholder={String(datasav[index]?.Basis2) || undefined} required onChange={handleInputChange} className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                    <input type="number" min={0} max={5} maxLength={1} name="interface" id={String(datasav[index]?.id) || undefined} onChange={handleInputChange} placeholder={String(datasav[index]?.Interface) || undefined} required />
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                    <input type="number" name="CMS" id={String(datasav[index]?.id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index]?.CMS) || undefined} required />
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                    <input type="number" name="SPMS" id={String(datasav[index]?.id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index]?.SPMS) || undefined} required />
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                    <input type="number" name="NEWPERPAY" id={String(datasav[index]?.id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index]?.NEWPERPAY) || undefined} required />
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                    <input type="number" name="OLDPERPAY" id={String(datasav[index]?.id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index]?.OLDPERPAY) || undefined} required />
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                    <input type="number" name="UTILITYMASTER" id={String(datasav[index]?.id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index]?.UTILITYMASTER) || undefined} required />
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                    <input type="number" name="INTERNET" id={String(datasav[index]?.id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index]?.INTERNET) || undefined} required />
+                                                </span>
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                    <input type="number" name="EXCHANGEBROWSERMAIL" id={String(datasav[index]?.id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index]?.EXCHANGEBROWSERMAIL) || undefined} required />
+                                                </span>
+                                            </button>
+                                        </td>
 
-                        </tr>
-
-
-                    </thead>
-                    <tbody>
-
-                        {
-                            timedatas.map((data, index) => (
-
-
-                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200/70 dark:hover:bg-gray-600">
-                                    <td className="w-4 p-4">
-                                        <div className="flex items-center ">
-                                            <input
-                                                id="checkbox-table-search-1"
-                                                type="checkbox"
-                                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                            />
-                                            <label htmlFor="checkbox-table-search-1" className="sr-only">
-                                                checkbox
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white ">
-                                        <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
-                                                <input disabled={true} type="text" name="id" id={String(datasav[index].id) || undefined}    min={0} max={5} maxLength={1} value={index + 1} placeholder={String(datasav[index].id) || undefined} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
-                                                <input disabled={true} type="text" name="from" id={String(datasav[index].id) || undefined} value={data} min={0} max={5} maxLength={1} placeholder={String(datasav[index].to.toLocaleString) || undefined} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
-                                                <input disabled={true} type="text" name="to" id={String(datasav[index].id) || undefined} min={0} max={5} maxLength={1} value={index > 5 ? (index + 8 + ": 00 PM") : (index + 8 + ": 00 AM")} placeholder={String(datasav[index].from) || undefined} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
-
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button  className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
-                                                <input disabled={ChagedValue && ChagedValue >5 ? true:popError()} type="number" name="Basis2" id={String(datasav[index].id) || undefined} min={0} max={5} maxLength={1} placeholder={String(datasav[index].Basis2) || undefined} required onChange={handleInputChange} className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button>
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                <input    type="number" min={0} max={5} maxLength={1} name="interface" id={String(datasav[index].id) || undefined} onChange={handleInputChange} placeholder={String(datasav[index].Interface) || undefined} required />
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button>
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                <input   type="number" name="CMS" id={String(datasav[index].id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index].CMS) || undefined} required />
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button>
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                <input   type="number" name="SPMS" id={String(datasav[index].id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index].SPMS) || undefined} required />
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button>
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                <input type="number" name="NEWPERPAY" id={String(datasav[index].id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index].NEWPERPAY) || undefined} required />
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button>
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                <input   type="number" name="OLDPERPAY" id={String(datasav[index].id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index].OLDPERPAY) || undefined} required />
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button>
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                <input  type="number" name="UTILITYMASTER" id={String(datasav[index].id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index].UTILITYMASTER) || undefined} required />
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button>
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                <input  type="number" name="INTERNET" id={String(datasav[index].id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index].INTERNET) || undefined} required />
-                                            </span>
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button>
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                <input  type="number" name="EXCHANGEBROWSERMAIL" id={String(datasav[index].id) || undefined} min={0} max={5} maxLength={1} onChange={handleInputChange} placeholder={String(datasav[index].EXCHANGEBROWSERMAIL) || undefined} required />
-                                            </span>
-                                        </button>
-                                    </td>
-
-                                    {/* <td className="px-6 py-4">
+                                        {/* <td className="px-6 py-4">
                                         <button id={String(datas[index].id)} value={index} onClick={handleEdit} className='bg-[#fafafafa] hover:shadow-md p-3 m-2 hover:bg-rose500/60 rounded-md border-[1px] border-black' >
                                             Update
                                         </button>
                                     </td> */}
-                                    <td className="px-6 py-4">
-                                        <button onClick={handleDelete} id={String(datasav[index].id)} value={index} className='text-red-500/70 hover:underline border hover:border-[2px] hover:border-red-600/70 md:px-2 hover:bg-red-600/20 rounded-md md:py-2 hover:shadow-lg'>
-                                            Delete
-                                        </button>
-                                    </td>
-                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <button>
-                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                                                <input type="text" name="COMMENTS" id={String(datasav[index].id) || undefined} maxLength={100} onChange={handleComments} placeholder={String(datasav[index].COMMENTS) || undefined} required />
-                                            </span>
-                                        </button>
-                                    </td>
-                                    {/* <React.Fragment/> */}
-                                </tr>
+                                        <td className="px-6 py-4">
+                                            <button onClick={handleDelete} id={String(datasav[index]?.id)} value={index} className='text-red-500/70 hover:underline border hover:border-[2px] hover:border-red-600/70 md:px-2 hover:bg-red-600/20 rounded-md md:py-2 hover:shadow-lg'>
+                                                Delete
+                                            </button>
+                                        </td>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <button>
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                                    <input type="text" name="COMMENTS" id={String(datasav[index]?.id) || undefined} maxLength={100} onChange={handleComments} placeholder={String(datasav[index]?.COMMENTS) || undefined} required />
+                                                </span>
+                                            </button>
+                                        </td>
+                                        {/* <React.Fragment/> */}
+                                    </tr>
 
 
-                            ))
-                        }
+                                ))
+                            }
 
 
-                        {/* Add more table rows as needed */}
-                    </tbody>
-                    <button className=' absolute right-1 rounded-md bg-[#333333] p-2 m-2 ' onClick={handleSave}>
-                        save works
-                    </button>
-                </table>
+                            {/* Add more table rows as needed */}
+                        </tbody>
+                        <button className=' absolute right-1 rounded-md bg-[#333333] p-2 m-2 ' onClick={handleSave}>
+                            save works
+                        </button>
+                    </table>
                 </form>
             </div>
 
