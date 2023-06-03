@@ -25,8 +25,8 @@ type MyDataType =
     {
 
         id: string;
-        from: string | Date;
-        to: string | Date;
+        from:'FROM_0700' | 'FROM_0800' | 'FROM_0900' | 'FROM_1000' | 'FROM_1100' | 'FROM_1200' | 'FROM_1300' | 'FROM_1400' | 'FROM_1500' | 'FROM_1600';
+        to: 'TO_0800' | 'TO_0900' | 'TO_1000' | 'TO_1100' | 'TO_1200' | 'TO_1300' | 'TO_1400' | 'TO_1500' | 'TO_1600' | 'TO_1700';
         Basis2: number | string;
         Interface: number | string;
         cms: number | string;
@@ -38,6 +38,15 @@ type MyDataType =
         exchangemail: number | string,
         comments: string;
         authorId: string;
+        authorName: string; 
+        author: {
+            id: string
+            name: string
+            email: string
+            password: string
+            createdAt: string
+            updatedAt: string
+          }
 
         // ExchangeBrowserMail:number
     };
@@ -68,43 +77,66 @@ const Table4 = () => {
         console.log("handleInputChange", e.target.value);
         const datachange = Number(e.target.value)
         setChagedValue(datachange)
-        const disabled = e.target.disabled
-        console.log("disabl;ed", disabled);
+        // const disabled = e.target.disabled
+        // console.log("disabl;ed", disabled);
         // get index of row to edit
+        // handleinput
+
         const index = tabledata?.findIndex((data) => data.id === e.target.id)
         console.log("index to change", index);
 
-        console.log("target name", e.target.name);
+        // console.log("target name", e.target.name);
         const targetName: string = e.target.name
         console.log("target name", targetName);
         // const dataToUpdate={...datasav[index], [targetName]: e.target.value}
         // console.log("dataToUpdate", dataToUpdate);
-        const dataUpdate = { ...tabledata[index], [targetName]: Number(e.target.value) }
-        console.log("index", index);
+        
+        // const dataUpdate = { ...tabledata[index], [targetName]: Number(e.target.value) }
+        // console.log("index", index);
 
-        console.log("dataUpdate", dataUpdate);
+        // console.log("dataUpdate", dataUpdate);
+        // handle inputs
+
         settabledata(tabledata.map((data) => {
 
             if (data.id === e.target.id) {
-                const dataUPatethis = { ...data, [e.target.name]: Number(e.target.value) }
-                console.log("dataUPatethis", dataUPatethis);
-                // SAVE to local storage
-                localStorage.setItem("saveData", JSON.stringify(dataUPatethis))
-                // upadted data this
-                return dataUPatethis
+                // datachange && datachange !== undefined && datachange !== null && datachange >= 5? { ...data, [targetName]: datachange } : { ...data, [targetName]: e.target.value }
+                if (datachange && datachange !== undefined && datachange !== null && datachange >= 5) {
+                    console.log("data", data);
+                    const dataUPatethis = { ...data, [targetName]:5}
+                    console.log("dataUPatethis more than 5", dataUPatethis);
+                    return dataUPatethis
+
+                }else{
+                    const dataUPatethis = { ...data, [targetName]: Number(e.target.value) }
+                    console.log("dataUPatethis less than 5", dataUPatethis);
+                    
+                    return dataUPatethis
+                }
+                
+               
+                // console.log("dataUPatethis", dataUPatethis);
+                // // SAVE to local storage
+                // localStorage.setItem("saveData", JSON.stringify(dataUPatethis))
+                // // upadted data this
+                
+              
 
             }
             //    if data updated does not march /simply cant return this 
+           
+            
+
             return data
         }))
         console.log("datasav changed", tabledata);
 
-        console.log("datasav changed", dataUpdate);
+        // console.log("datasav changed", dataUpdate);
     }
 
 
 
-    const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleDelete = async(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         const value = event.currentTarget.value;
@@ -116,7 +148,11 @@ const Table4 = () => {
         console.log("datasavcopy", datasavcopy);
         // get index 
         const indextr = tabledata?.findIndex((data) => data.id === id)
-        console.log("indextr", indextr);
+        indextr && axios.delete(`http://localhost:3000/api/Reports/${id}`).then((res) => {
+            console.log("res", res.data);
+           
+            
+        });
         if (indextr >= 0) {
             // Filter data by index value
             // const filteredTime = timedatas.filter((data, index) => index !== indextr);
@@ -132,6 +168,7 @@ const Table4 = () => {
 
         }
         // console.log("datasav data provi", datasav.length);
+        
     }
 
     const handleComments = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -243,7 +280,7 @@ const Table4 = () => {
 
                             // loop all data tofill table
 
-                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200/70 dark:hover:bg-gray-600">
+                            <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200/70 dark:hover:bg-gray-600">
                                 {/* index col */}
                                 <td className="w-4 p-4">
                                     <div className="flex items-center ">
@@ -262,7 +299,7 @@ const Table4 = () => {
                                     <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
                                         <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
                                             {index}
-                                            <input disabled={true} type="text" name="id" id={String(datasav.id) || undefined} min={0} max={5} maxLength={1} value={index + 1} placeholder={datasav.id} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
+                                            <input disabled={true} type="text" name="id" id={String(datasav.id) || undefined} min={0} max={5} maxLength={1} value={datasav.author?.name} placeholder={datasav.id} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
                                         </span>
                                     </button>
                                 </td>
@@ -270,7 +307,7 @@ const Table4 = () => {
                                 <td className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
                                         <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
-                                            <input disabled={true} type="text" name="from" value={index > 5 ? (index + 8 + ": 00 PM") : (index + 8 + ": 00 AM")} id={String(datasav.id) || undefined} min={0} max={5} maxLength={1} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
+                                            <input disabled={true} type="text" name="from" value={datasav.from} id={String(datasav.id) || undefined} min={0} max={5} maxLength={1} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
                                         </span>
                                     </button>
                                 </td>
@@ -278,7 +315,7 @@ const Table4 = () => {
                                 <td className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
                                         <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
-                                            <input disabled={true} type="text" name="to" id={String(datasav.id) || undefined} min={0} max={5} maxLength={1} value={index > 5 ? (index + 8 + 1 + ": 00 PM") : (index + 8 + 1 + ": 00 AM")} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
+                                            <input disabled={true} type="text" name="to" id={String(datasav.id) || undefined} min={0} max={5} maxLength={1} value={datasav.to} required className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
 
                                         </span>
                                     </button>
@@ -287,7 +324,7 @@ const Table4 = () => {
                                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
                                         <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
-                                            <input type="number" name="Basis2" id={String(datasav.id) || undefined} min={0} max={5} maxLength={1} placeholder={String(datasav.Basis2) || undefined} onChange={handleInputChange} className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
+                                            <input type="number" name="Basis2" pattern="[0-9]{0,5}" id={String(datasav.id) || undefined} min={0} max={5} maxLength={1} placeholder={String(datasav.Basis2) || undefined} onChange={handleInputChange} className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
                                         </span>
                                     </button>
                                 </td>
@@ -295,7 +332,7 @@ const Table4 = () => {
                                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
                                         <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
-                                            <input disabled={ChagedValue && ChagedValue > 5 ? true : false} type="number" name="interface" id={String(datasav.id) || undefined} min={0} max={5} maxLength={1} placeholder={String(datasav.Interface) || undefined} required onChange={handleInputChange} className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
+                                            <input type="number" name="interface" id={String(datasav.id) || undefined} min={0} max={5} maxLength={1} placeholder={String(datasav.Interface) || undefined} required onChange={handleInputChange} className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' />
                                         </span>
                                     </button>
                                 </td>
@@ -370,7 +407,7 @@ const Table4 = () => {
                                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <button>
                                         <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                                            <input type="text" name="COMMENTS" id={String(datasav.id) || undefined} maxLength={100} onChange={handleComments} placeholder={String(datasav.comments) || undefined} required />
+                                            <input type="text" name="comments" id={String(datasav.id) || undefined} maxLength={100} onChange={handleComments} placeholder={String(datasav.comments) || undefined} required />
                                         </span>
                                     </button>
                                 </td>

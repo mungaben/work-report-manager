@@ -8,7 +8,15 @@ import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(req: NextRequest, res: NextResponse) {
     try{
-    const reports = await prisma.report.findMany({})
+    const reports = await prisma.report.findMany({
+        include:{
+            author: true
+        },
+        orderBy:{
+            from: 'asc'
+
+        }
+    })
     
     return NextResponse.json(reports)
     }
@@ -25,6 +33,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     try{
         const report = await prisma.report.create({
             data:{
+                from: data.from,
+                to: data.to,
                 Basis2: data.Basis2,
                 Interface: data.Interface,
                 cms: data.cms,
@@ -38,6 +48,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 authorId: data.authorId,
             }
         })
+        console.log("report",report);
+        
         return NextResponse.json(report)
     }
     catch(err){
@@ -59,6 +71,8 @@ export async function PUT(req: NextRequest, res: NextResponse) {
             },
             data:{
                 Basis2: data.Basis2,
+                from: data.from,
+                to:data.to,
                 Interface: data.Interface,
                 cms: data.cms,
                 spms: data.spms,
