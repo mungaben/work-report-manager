@@ -81,6 +81,8 @@ const Table4 = () => {
         // console.log("disabl;ed", disabled);
         // get index of row to edit
         // handleinput
+        console.log("datachange type of", typeof(tabledata));
+        
 
         const index = tabledata?.findIndex((data) => data.id === e.target.id)
         console.log("index to change", index);

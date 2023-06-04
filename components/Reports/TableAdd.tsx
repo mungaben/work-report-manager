@@ -3,8 +3,9 @@
 "use client"
 
 import React, { useState } from 'react'
+import Tablerows from './Tablerows';
+import TabaleRow from './TabaleRow';
 export const applications = [
-    "ID",
     "From",
     "To",
     'Basis 2',
@@ -84,8 +85,8 @@ const TableAdd = () => {
 
             </thead>
             <tbody>
-                
 
+<TabaleRow/>
 
 
                 {/* Add more table rows as needed */}

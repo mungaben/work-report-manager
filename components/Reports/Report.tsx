@@ -10,6 +10,7 @@ import Table from './Table'
 import Table2 from './Table2';
 import Table4 from './Table4'
 import TableAdd from './TableAdd';
+import TabaleRow from './TabaleRow';
 
 const Report = () => {
   return (
