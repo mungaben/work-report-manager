@@ -1,9 +1,9 @@
 
 
-import {prisma} from "../../../components/Prisma/Prisma"
+import { prisma } from "../../../components/Prisma/Prisma"
 import { NextRequest, NextResponse } from "next/server"
 import Report from '@/components/Reports/Report';
-import { data } from '../../../components/RIghtBar/Messages';
+import * as bcrypt from 'bcryptjs'
 
 type paramsType = { params: { id: string } }
 
@@ -33,25 +33,27 @@ export async function POST(req: NextRequest, res: NextResponse) {
     //     exchangemail,
     //     comments,
     //     authorId } = req.body;
-const body= await req.json()
-try{
+    const body = await req.json()
+    try {
 
-    const data = await prisma.user.create({
-        data: {
-            name: body.name,
-            email: body.email,
-            password: body.password,
+
+        const data = await prisma.user.create({
+            data: {
+                name: body.name,
+                email: body.email,
+                password: await bcrypt.hash(body.password, 10),
+            }
+
         }
+        );
+        const { password, ...resultwitnopassword } = data
+        return NextResponse.json(resultwitnopassword)
 
     }
-     );
-    return NextResponse.json(data)
+    catch (error) {
+        return NextResponse.json(error)
 
-}
-catch(error){
-    return NextResponse.json(error)
-   
-}
+    }
 }
 
 
@@ -59,23 +61,23 @@ catch(error){
 
 export async function PUT(req: NextRequest, res: NextResponse) {
     const body = await req.json()
-    try{
+    try {
 
-        const  data = await prisma.user.update({
+        const data = await prisma.user.update({
             where: {
-                id:body.id
+                id: body.id
             },
             data: {
-                name:body.name,
-                email:body.email,
-                password:body.password,
+                name: body.name,
+                email: body.email,
+                password: body.password,
             }
         });
         return NextResponse.json(data)
-    }catch(error){
+    } catch (error) {
         return NextResponse.json(error)
     }
-    
+
 }
 
 

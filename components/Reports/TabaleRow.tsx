@@ -89,6 +89,7 @@ const TabaleRow = () => {
     const [To, setTo] = useState<ToTime>(ToTime.to_0800AM)
     const [ChagedValue, setChagedValue] = useState<number | undefined>()
     const [settime, setsettime] = useState("")
+    const [Datadis, setDatadis] = useState(false)
 
     // logics **************************************************************************************************************
 
@@ -111,20 +112,6 @@ const TabaleRow = () => {
         console.log("handleInputChange", e.target.value);
         const targetName: string = e.target.name
         const datachange = e.target.value
-        // if (targetName === 'from'|| targetName === 'to') {
-        // var datachange = e.target.value
-
-        // }else{
-
-        //  var datachange = Number(e.target.value)
-        // }
-
-        // console.log("datachange", datachange);
-
-        // setChagedValue(datachange)
-
-        // targetName ==='from'|| targetName ==='to' ? (const datachange = e.target.value): (const datachange = Number(e.target.value))
-
         console.log("target name", targetName);
         console.log(typeof (tabledata));
         const ID = e.target.id
@@ -139,17 +126,21 @@ const TabaleRow = () => {
         // const datachanged = targetName === 'from' || targetName === 'to' ? datachange : Number(datachange)
         // console.log("datachanged", datachanged);
 
-        let datachanged:Number|String|undefined;
+        let datachanged
         e.target.name === "to" && console.log("target name is to", e.target.name);
-        
+
 
         if (e.target.name === 'from' || e.target.name === "to") {
-            console.log("fom to" ,"or to ");
-            
+            console.log("fom to", "or to ");
+
             datachanged = e.target.value;
+            console.log("datachanged is to or for", datachanged);
+
         } else {
             const parsedValue = Number(datachange);
-            datachanged = isNaN(parsedValue) ? datachange : parsedValue;
+            // datachanged = isNaN(parsedValue) ? datachange : parsedValue;
+            console.log("parsedValue", parsedValue);
+
         }
 
 
@@ -170,14 +161,14 @@ const TabaleRow = () => {
 
 
                 // datachange && datachange !== undefined && datachange !== null && datachange >= 5? { ...data, [targetName]: datachange } : { ...data, [targetName]: e.target.value }
-                if (datachange && datachange !== undefined && datachange !== null && Number(datachange) >= 5) {
+                if (datachange && datachange !== undefined && datachange !== null) {
                     console.log("data", data);
-                    const dataUPatethis = { ...data, [targetName]: 5 }
+                    const dataUPatethis = { ...data, [targetName]: e.target.name === "from" || e.target.name === "to" ? datachange : Number(datachange) }
                     console.log("dataUPatethis more than 5", dataUPatethis);
                     return dataUPatethis
 
                 } else {
-                    const dataUPatethis = { ...data, [targetName]: Number(e.target.value) }
+                    const dataUPatethis = { ...data, [targetName]: datachange }
                     console.log("dataUPatethis less than 5", dataUPatethis);
 
                     return dataUPatethis
@@ -270,6 +261,9 @@ const TabaleRow = () => {
         })
             .then(response => {
                 if (response.ok) {
+                    setDatadis(prev=>!prev)
+                    console.log( "response", response);
+                    
                     return response.json();
                 } else {
                     throw new Error('Something went wrong');
@@ -277,11 +271,15 @@ const TabaleRow = () => {
             })
             .then(data => {
                 console.log(data);
+                settabledata(data)
+                console.log("tabledata", tabledata);
+                
             })
             .catch(error => {
                 console.error(error);
             });
         // console.log("tabledata", tabledata);
+
 
 
         router.refresh()
@@ -519,7 +517,7 @@ const TabaleRow = () => {
                 </button>
             </td>
             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                <button onClick={handleEdit} className='p-2 m-1 hover:bg-[#333333]/40  border-[1px] border-[#333333] rounded-md'>
+                <button onClick={handleEdit} disabled={Datadis}    className={`p-2 m-1 hover:bg-[#333333]/40  border-[1px] border-[#333333] rounded-md disabled:opacity-0 ${Datadis ? ' opacity-0':' bg-[#333333]'}`}>
                     save
                 </button>
             </td>

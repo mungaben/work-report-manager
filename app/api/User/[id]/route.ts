@@ -69,5 +69,9 @@ export async function GET(req: NextRequest,{params}:{params:Idtype}, res: NextRe
     }
 }
 
+// post request
+
+
+
 // update a single user
 

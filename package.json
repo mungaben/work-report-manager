@@ -19,6 +19,7 @@
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
+    "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "chart.js": "^4.3.0",
     "chartjs-plugin-datalabels": "^2.2.0",
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
+    "@types/bcrypt": "^5.0.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/react-table": "^7.7.14",
     "prisma": "^4.15.0",

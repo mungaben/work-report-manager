@@ -85,8 +85,19 @@ const TableAdd = () => {
 
             </thead>
             <tbody>
+                {/* daily  report */}
+                {
+                    Array(6).fill(0).map((_, index) => (
+                        <React.Fragment>
+                            <TabaleRow />
 
-<TabaleRow/>
+
+                        </React.Fragment>
+
+
+                    ))
+                }
+
 
 
                 {/* Add more table rows as needed */}
