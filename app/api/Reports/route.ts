@@ -32,38 +32,53 @@ export async function GET(req: NextRequest, res: NextResponse) {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-    const body = await req.json();
+   
     // console.log("data", req)
     // const body=bodybody.datatopost
-    console.log("body1", body);
-    const { to, from, Basis2, Interface, cms, spms, newperpay, oldperpay, utilitymaster, internet, exchangemail, comments, authorId } = body;
+    // console.log("body1", body);
+    const { to, from, Basis2, Interface, cms, spms, newperpay, oldperpay, utilitymaster, internet, exchangemail, comments, authorId } = await  req.json();
 
 
     try {
-        console.log("data invoked", body);
-        console.log(Object.keys(body).length);
+        // console.log("data invoked", body);
+        // console.log(Object.keys(body).length);
+        console.log(to, from, Basis2, Interface, cms, spms, newperpay, oldperpay, utilitymaster, internet, exchangemail, comments, authorId );
+        
         const report = await prisma.report.create({
             data: {
-                from,
-                to,
-                Basis2,
-                Interface,
-                cms,
-                spms,
-                newperpay,
-                oldperpay,
-                utilitymaster,
-                internet,
-                exchangemail,
-                comments,
-                authorId,
+                from:from,
+                to:to,
+                Basis2: Basis2,
+                Interface: Interface,
+                cms: cms,
+                spms: spms,
+                newperpay: newperpay,
+                oldperpay: oldperpay,
+                utilitymaster: utilitymaster,
+                internet: internet,
+                exchangemail: exchangemail,
+                comments: comments,
+                authorId: authorId||null
             }
         });
         console.log("report", report);
         return NextResponse.json(report);
     } catch (err) {
-        return NextResponse.json({ error: err });
+        if (err) {
+            // The .code property can be accessed in a type-safe manner
+            if (err === 'P2002') {
+              console.log(
+                'There is a unique constraint violation, a new user cannot be created with this email'
+              )
+            }
+          }
+          return NextResponse.json({ error: err });
+     
+
+
+        
     }
+
 }
 
 export async function PUT(req: NextRequest, res: NextResponse) {

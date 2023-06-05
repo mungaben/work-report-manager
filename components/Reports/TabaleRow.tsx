@@ -4,12 +4,11 @@ import axios from 'axios';
 import { parse } from 'path/win32';
 import { set } from 'react-hook-form';
 import { useRouter } from "next/navigation";
+import { data } from 'autoprefixer';
 type MyDataType =
     {
-        prepay: any;
-        exchangebrowser: any;
-        from: 'from_0700' | 'from_0800' | 'from_0900' | 'from_1000' | 'from_1100' | 'from_1200' | 'from_1300' | 'from_1400' | 'from_1500' | 'from_1600';
-        to: 'to_0800' | 'to_0900' | 'to_1000' | 'to_1100' | 'to_1200' | 'to_1300' | 'to_1400' | 'to_1500' | 'to_1600' | 'to_1700';
+        from: 'from_0700AM' | 'from_0800AM' | 'from_0900AM' | 'from_1000AM' | 'from_1100AM' | 'from_1200PM' | 'from_1300PM' | 'from_1400PM' | 'from_1500PM' | 'from_1600PM';
+        to: 'to_0800AM' | 'to_0900AM' | 'to_1000AM' | 'to_1100AM' | 'to_1200PM' | 'to_1300PM' | 'to_1400PM' | 'to_1500PM' | 'to_1600PM' | 'to_1700PM'
         Basis2: number | string;
         Interface: number | string;
         cms: number | string;
@@ -51,8 +50,8 @@ enum ToTime {
 const TabaleRow = () => {
     const router = useRouter();
     const defaultData: MyDataType[] = [{
-        from: 'from_0700',
-        to: 'to_0800',
+        from: 'from_0700AM',
+        to: 'to_0800AM',
         Basis2: 5,
         Interface: 5,
         cms: 5,
@@ -108,12 +107,24 @@ const TabaleRow = () => {
 
 
     const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        // input value
         console.log("handleInputChange", e.target.value);
-        const datachange = Number(e.target.value)
-        console.log("datachange", datachange);
-
-        setChagedValue(datachange)
         const targetName: string = e.target.name
+        const datachange = e.target.value
+        // if (targetName === 'from'|| targetName === 'to') {
+        // var datachange = e.target.value
+
+        // }else{
+
+        //  var datachange = Number(e.target.value)
+        // }
+
+        // console.log("datachange", datachange);
+
+        // setChagedValue(datachange)
+
+        // targetName ==='from'|| targetName ==='to' ? (const datachange = e.target.value): (const datachange = Number(e.target.value))
+
         console.log("target name", targetName);
         console.log(typeof (tabledata));
         const ID = e.target.id
@@ -125,8 +136,24 @@ const TabaleRow = () => {
         // make a copy of tabledata
         // const tabledatas = [...tabledata]
         // console.log("tabledatas OBN CHNGE", tabledatas);
+        // const datachanged = targetName === 'from' || targetName === 'to' ? datachange : Number(datachange)
+        // console.log("datachanged", datachanged);
 
-        const dataToUpdate = { ...tabledata, [targetName]: datachange }
+        let datachanged:Number|String|undefined;
+        e.target.name === "to" && console.log("target name is to", e.target.name);
+        
+
+        if (e.target.name === 'from' || e.target.name === "to") {
+            console.log("fom to" ,"or to ");
+            
+            datachanged = e.target.value;
+        } else {
+            const parsedValue = Number(datachange);
+            datachanged = isNaN(parsedValue) ? datachange : parsedValue;
+        }
+
+
+        const dataToUpdate = { ...tabledata, [targetName]: datachanged }
         console.log("dataToUpdate", dataToUpdate);
         settabledata(dataToUpdate)
 
@@ -143,7 +170,7 @@ const TabaleRow = () => {
 
 
                 // datachange && datachange !== undefined && datachange !== null && datachange >= 5? { ...data, [targetName]: datachange } : { ...data, [targetName]: e.target.value }
-                if (datachange && datachange !== undefined && datachange !== null && datachange >= 5) {
+                if (datachange && datachange !== undefined && datachange !== null && Number(datachange) >= 5) {
                     console.log("data", data);
                     const dataUPatethis = { ...data, [targetName]: 5 }
                     console.log("dataUPatethis more than 5", dataUPatethis);
@@ -184,7 +211,7 @@ const TabaleRow = () => {
         const targetName: string = e.target.name
         console.log("target name", targetName);
 
-    
+
         settabledata(tabledata.map((data) => {
 
             if (e.target.id) {
@@ -199,12 +226,12 @@ const TabaleRow = () => {
             //    if data updated does not march /simply cant return this 
             return data
         }))
-        
+
     }
 
 
 
-    const handleEdit = async(event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleEdit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         const value: string = event.currentTarget.value;
@@ -213,48 +240,51 @@ const TabaleRow = () => {
         const data = tabledata[id]
         console.log("data", data);
         // post data to database on cleick edit
-        axios.post("/api/Reports",{
-            Basis2: data.Basis2,
-            from: data.from,
-            to: data.to,
-            Interface: data.Interface,
-            cms: data.cms,
-            spms: data.spms,
-            newperpay: data.newperpay,
-            oldperpay: data.oldperpay,
-            utilitymaster: data.utilitymaster,
-            internet: data.internet,
-            exchangemail: data.exchangemail,
-            comments: data.comments
-        }).then((resdata) => {
-            console.log("resdata", resdata);
-        }).catch((error) => {
-            console.log("error", error);
-        });
-        // fetch('http://localhost:3000/api/Reports', {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(datatopost),
-        //   })
-        //     .then(response => {
-        //       if (response.ok) {
-        //         return response.json();
-        //       } else {
-        //         throw new Error('Something went wrong');
-        //       }
-        //     })
-        //     .then(data => {
-        //       console.log(data);
-        //     })
-        //     .catch(error => {
-        //       console.error(error);
-        //     });
+        // axios.post("/api/Reports",{
+        //     Basis2: data.Basis2,
+        //     from: data.from,
+        //     to: data.to,
+        //     Interface: data.Interface,
+        //     cms: data.cms,
+        //     spms: data.spms,
+        //     newperpay: data.newperpay,
+        //     oldperpay: data.oldperpay,
+        //     utilitymaster: data.utilitymaster,
+        //     internet: data.internet,
+        //     exchangemail: data.exchangemail,
+        //     comments: data.comments
+        // }).then((resdata) => {
+        //     console.log("resdata", resdata);
+        // }).catch((error) => {
+        //     console.log("error", error);
+        // });
+        const jsonData = JSON.stringify(tabledata[0]);
+        console.log("jsonData", jsonData);
+
+        fetch('http://localhost:3000/api/Reports', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: jsonData
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Something went wrong');
+                }
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
         // console.log("tabledata", tabledata);
 
 
-    router.refresh()
+        router.refresh()
     };
 
 
@@ -290,7 +320,7 @@ const TabaleRow = () => {
             <td className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
                     <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
-                        <select name="SelectFrom" id="select_from" onChange={handleInputChange} className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
+                        <select name="from" id="from" onChange={handleInputChange} className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
                             {
                                 // loop from keys
                                 keysFromTime.map((datas, index) => (
@@ -307,7 +337,7 @@ const TabaleRow = () => {
             <td className="px-3 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <button className='outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
                     <span className="text-sm font-medium text-gray-900 dark:text-gray-300 bg-transparent">
-                        <select name="SelectFrom" id="select_from" onChange={handleInputChange} className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
+                        <select name="to" id="to" onChange={handleInputChange} className=' outline-none focus:outline-none appearance-none hover:outline-none border-none hover:border-none focus:border-none' >
                             {
                                 // loop tokeys
                                 keysToTime.map((datas, index) => (
@@ -484,7 +514,7 @@ const TabaleRow = () => {
             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <button>
                     <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                        <input type="text" id='comments' name="comments" defaultValue={defaultData[0].comments} maxLength={100} onChange={handleComments}  required />
+                        <input type="text" id='comments' name="comments" defaultValue={defaultData[0].comments} maxLength={100} onChange={handleComments} required />
                     </span>
                 </button>
             </td>
