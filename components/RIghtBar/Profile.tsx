@@ -4,8 +4,11 @@
 
 import React from 'react'
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
 const profile = () => {
+  const { data: session } = useSession();
+  console.log(session?.user?.name);
   return (
     <div className=' flex w-full items-center justify-center top-5  flex-col transition'>
       <Image
@@ -19,11 +22,11 @@ const profile = () => {
         <h4 className=' flex flex-col items-center justify-center'>
           {/* name4 under image centred */}
           <span className=' p-2 mt-2 flex text-center justify-center items-center text-[#333333] text-2xl capitalize hover:underline' >
-            justify  centere name
+            name:{session?.user?.name}
           </span>
           <span >
             <span className=' p-2 text-[#333333] text-xl capitalize hover:underline justify-center items-center' >
-              DIrector works
+              Director works
             </span>
           </span>
         </h4>

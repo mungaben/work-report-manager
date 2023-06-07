@@ -1,10 +1,11 @@
 "use client"
 import React, { SelectHTMLAttributes, useEffect, useState } from 'react'
 import axios from 'axios';
-import { parse } from 'path/win32';
+
 import { set } from 'react-hook-form';
 import { useRouter } from "next/navigation";
-import { data } from 'autoprefixer';
+import { useSession } from 'next-auth/react';
+
 type MyDataType =
     {
         from: 'from_0700AM' | 'from_0800AM' | 'from_0900AM' | 'from_1000AM' | 'from_1100AM' | 'from_1200PM' | 'from_1300PM' | 'from_1400PM' | 'from_1500PM' | 'from_1600PM';
@@ -19,7 +20,8 @@ type MyDataType =
         internet: number | string,
         exchangemail: number | string,
         comments: string;
-        // ExchangeBrowserMail:number
+        authorId: string;
+    
     };
 enum FromTime {
     from_0700AM,
@@ -48,6 +50,8 @@ enum ToTime {
 }
 
 const TabaleRow = () => {
+    const { data: session } = useSession();
+    const [authorId, setauthorId] = useState<string>(session.user?.name)
     const router = useRouter();
     const defaultData: MyDataType[] = [{
         from: 'from_0700AM',
@@ -62,6 +66,7 @@ const TabaleRow = () => {
         internet: 5,
         exchangemail: 5,
         comments: 'hello there'
+        authorId:authorId
     },
 
     ]
@@ -182,6 +187,9 @@ const TabaleRow = () => {
 
         // console.log("datasav changed", dataUpdate);
     }
+    useEffect(() => {
+
+    },[])
 
 
 

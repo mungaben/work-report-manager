@@ -21,6 +21,7 @@ const Login = async () => {
     <div>
       <p>Not signed in yap</p>
       <button onClick={() => signIn()}>Sign in</button>
+      <button onClick={() => signOut()}>Sign out</button>
 
     </div>
   )
