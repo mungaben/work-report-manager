@@ -9,6 +9,15 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
+
+
+interface User {
+  id: string;
+  name?: string | null | undefined;
+  email?: string | null | undefined;
+  image?: string | null | undefined;
+}
+
 // export const authOptions: NextAuthOptions = {
 //   session: {
 //     strategy: "jwt",
@@ -58,7 +67,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 
 export const authOptions: NextAuthOptions = {
-  adapter:PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
   },
@@ -109,7 +118,7 @@ export const authOptions: NextAuthOptions = {
 
         if (!credentials?.email || !credentials.password) {
           console.log("no user credentials");
-          
+
           throw new Error('Please enter an email and password')
         }
 
@@ -119,6 +128,9 @@ export const authOptions: NextAuthOptions = {
             email: credentials.email
           }
         });
+
+        console.log("user from db ", user);
+
 
         // if no user was found 
         if (!user || !user?.password) {
@@ -151,25 +163,33 @@ export const authOptions: NextAuthOptions = {
   // signIn: "/auth/signin",
   //   // error: "/auth/error",
   // },
-  // callbacks: {
-  //   async jwt({ token, user }) {
-  //     // Persist the user's JWT in the token response
-  //     if (user) {
-  //       token.id = user.id;
-  //       token.email = user.email;
-  //     }
-  //     console.log("token", token);
+  callbacks: {
+    async jwt({ token, user }) {
+      // Persist the user's JWT in the token response
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.sub = user.id;
+        token.name = user.name;
+        token.randomKey = "Hey cool";
 
-  //     return token;
-  //   },
-  //   async session({ session, token }) {
-  //     // Re-use the session across requests
-  //     console.log("session", session);
+      }
+      console.log("token", token);
 
-  //     return session;
-  //   },
-  // },
-  
+      return token;
+    },
+    async session({ session, token, user }: { session: any; token: any; user: any; }) {
+      // Re-use the session across requests
+
+      if (session?.user?.id) {
+        session.user.id = user.id as string;
+      }
+      console.log("session data", session, token, user);
+
+      return session;
+    },
+  },
+
 };
 
 

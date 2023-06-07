@@ -21,7 +21,7 @@ type MyDataType =
         exchangemail: number | string,
         comments: string;
         authorId: string;
-    
+     
     };
 enum FromTime {
     from_0700AM,
@@ -51,7 +51,7 @@ enum ToTime {
 
 const TabaleRow = () => {
     const { data: session } = useSession();
-    const [authorId, setauthorId] = useState<string>(session.user?.name)
+    const [authorId, setAuthorId] = useState<string>(session?.user?.name ?? "");
     const router = useRouter();
     const defaultData: MyDataType[] = [{
         from: 'from_0700AM',
@@ -65,8 +65,9 @@ const TabaleRow = () => {
         utilitymaster: 5,
         internet: 5,
         exchangemail: 5,
-        comments: 'hello there'
-        authorId:authorId
+        comments: 'hello there',
+        authorId:"bf81a30d-d972-420d-b264-7ba001b31623"
+      
     },
 
     ]
