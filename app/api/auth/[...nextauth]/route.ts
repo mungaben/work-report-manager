@@ -144,7 +144,8 @@ export const authOptions: NextAuthOptions = {
         if (!passwordMatch) {
           throw new Error('Incorrect password')
         }
-
+       console.log("user from authentication next", user);
+       
         return user;
       },
 
@@ -159,21 +160,23 @@ export const authOptions: NextAuthOptions = {
   ],
 
   secret: process.env.NEXTAUTH_SECRET,
-  // pages: {
-  // signIn: "/auth/signin",
-  //   // error: "/auth/error",
-  // },
+  pages: {
+  signIn: "/auth/signin",
+    // error: "/auth/error",
+  },
   callbacks: {
     async jwt({ token, user }) {
       // Persist the user's JWT in the token response
       if (user) {
         token.id = user.id;
+        
         token.email = user.email;
         token.sub = user.id;
         token.name = user.name;
         token.randomKey = "Hey cool";
 
       }
+      // localStorage.setItem("token", JSON.stringify(token));
       console.log("token", token);
 
       return token;
@@ -181,8 +184,8 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token, user }: { session: any; token: any; user: any; }) {
       // Re-use the session across requests
 
-      if (session?.user?.id) {
-        session.user.id = user.id as string;
+      if (session?.user) {
+        session.user.id = token.sub;
       }
       console.log("session data", session, token, user);
 

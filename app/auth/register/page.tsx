@@ -17,12 +17,14 @@ export default function Register() {
          const registerUser = async (e:React.FormEvent<HTMLFormElement>) => {
             e.preventDefault()
             axios.post('/api/User', data)
-            .then(() => {
+            .then((datas) => {
+                console.log("user data from register",datas);
+                
                 toast.success('User has been registered!')
-                router.push('/auth/register')}
+                router.push('/Main')}
                 )
 
-            .catch(() => toast.error('Something went wrong!'))
+            .catch((errors) => toast.error(errors))
          }
 
     return (

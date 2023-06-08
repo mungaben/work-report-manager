@@ -1,4 +1,5 @@
 "use client"
+
 import React, { SelectHTMLAttributes, useEffect, useState } from 'react'
 import axios from 'axios';
 
@@ -21,7 +22,7 @@ type MyDataType =
         exchangemail: number | string,
         comments: string;
         authorId: string;
-     
+
     };
 enum FromTime {
     from_0700AM,
@@ -49,9 +50,24 @@ enum ToTime {
     to_1700AM
 }
 
+type UserData = {
+    email: string;
+    id: string;
+    name: string;
+};
+
+type SessionData = {
+    user: UserData;
+    expires: string;
+};
+
 const TabaleRow = () => {
     const { data: session } = useSession();
-    const [authorId, setAuthorId] = useState<string>(session?.user?.name ?? "");
+    console.log("session data in table", session);
+
+    const [authorId, setAuthorId] = useState(session?.user.id);
+    console.log("authorId data from table", authorId);
+
     const router = useRouter();
     const defaultData: MyDataType[] = [{
         from: 'from_0700AM',
@@ -66,8 +82,7 @@ const TabaleRow = () => {
         internet: 5,
         exchangemail: 5,
         comments: 'hello there',
-        authorId:"bf81a30d-d972-420d-b264-7ba001b31623"
-      
+        authorId: authorId
     },
 
     ]
@@ -96,6 +111,7 @@ const TabaleRow = () => {
     const [ChagedValue, setChagedValue] = useState<number | undefined>()
     const [settime, setsettime] = useState("")
     const [Datadis, setDatadis] = useState(false)
+    const [savedData, setsavedData] = useState(false)
 
     // logics **************************************************************************************************************
 
@@ -190,7 +206,7 @@ const TabaleRow = () => {
     }
     useEffect(() => {
 
-    },[])
+    }, [])
 
 
 
@@ -233,7 +249,7 @@ const TabaleRow = () => {
 
     const handleEdit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-
+        setDatadis(prev => !prev)
         const value: string = event.currentTarget.value;
         const id = Number(event.currentTarget.id);
         console.log("id", id);
@@ -270,9 +286,10 @@ const TabaleRow = () => {
         })
             .then(response => {
                 if (response.ok) {
-                    setDatadis(prev=>!prev)
-                    console.log( "response", response);
-                    
+                    setsavedData(prev => !prev)
+
+                    console.log("response", response);
+
                     return response.json();
                 } else {
                     throw new Error('Something went wrong');
@@ -282,7 +299,7 @@ const TabaleRow = () => {
                 console.log(data);
                 settabledata(data)
                 console.log("tabledata", tabledata);
-                
+
             })
             .catch(error => {
                 console.error(error);
@@ -526,8 +543,11 @@ const TabaleRow = () => {
                 </button>
             </td>
             <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                <button onClick={handleEdit} disabled={Datadis}    className={`p-2 m-1 hover:bg-[#333333]/40  border-[1px] border-[#333333] rounded-md disabled:opacity-0 ${Datadis ? ' opacity-0':' bg-[#333333]'}`}>
-                    save
+                <button onClick={handleEdit} disabled={Datadis} className={`p-2 m-1 hover:bg-[#333333]/40  border-[1px] border-[#333333]  bg-[#377DFF]  rounded-md disabled:opacity-50 ${Datadis && '   bg-[#333333] '} ${savedData && 'bg-[#37CB87]'}`}>
+                    {
+                        Datadis ? (savedData ? 'saved' : "saving ...") : "save"
+                    }
+
                 </button>
             </td>
 
