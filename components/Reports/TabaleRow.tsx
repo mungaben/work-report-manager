@@ -6,6 +6,11 @@ import axios from 'axios';
 import { set } from 'react-hook-form';
 import { useRouter } from "next/navigation";
 import { useSession } from 'next-auth/react';
+import { DataAvailable } from '../Activitydata';
+console.log("Data acvailables",DataAvailable())
+import { DataAvailableprevious } from '../Activitydata';
+console.log("data vailable previous daya",DataAvailableprevious());
+
 
 type MyDataType =
     {

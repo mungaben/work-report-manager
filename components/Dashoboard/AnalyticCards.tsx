@@ -1,11 +1,13 @@
 
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Doughnut } from 'react-chartjs-2';
 import { Dougnaut } from './Doughnut';
+import ActivityData from '../ActivityData';
+import { DataAvailable } from '../Activitydata';
+import { DataAvailableprevious } from '../Activitydata';
+
 export const applications = [
-    "From",
-    "To",
     'Basis 2',
     'INTERFACE',
     'CMS',
@@ -18,10 +20,21 @@ export const applications = [
 
 ];
 
+// useEffect(() => {
+//     console.log(applications)
+// }, [])
 
-const AnalyticCards = () => {
+
+const AnalyticCards = async() => {
+    const dtaprev= await DataAvailableprevious();
+    console.log("data vailprev",dtaprev);
+    
+    // console.log("data vailprev",dtaprev);
+    
+
     return (
         <div className=' w-full flex flex-row justify-between items-center overflow-x-auto'>
+            {/* <ActivityData/> */}
 
             {
                 applications.map((data, index) => (

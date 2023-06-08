@@ -40,18 +40,28 @@ export async function GET(req: NextRequest, res: NextResponse) {
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
+   
+console.log("lt",new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate()).toLocaleString(),);
+console.log("gte",new Date(beforeYesterday.getFullYear(), beforeYesterday.getMonth(), beforeYesterday.getDate()).toLocaleString(),);
 
 
   console.log(weekendDates);
 
   const data = await prisma.report.findMany({
     where: {
-      date: {
-        gte: date,
+       createdAt: {
+        // gte: yesterday,
+        gte: new Date(beforeYesterday.getFullYear(), beforeYesterday.getMonth(), beforeYesterday.getDate()),
+        lt: new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate()),
+
         // lte: yesterday,
         // notIn: weekendDates,
       },
     },
+    include: {
+      author: true
+       
+      }
   });
 
 
