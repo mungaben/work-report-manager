@@ -19,29 +19,94 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+  role      Role     @default(USER)
+  online    Boolean  @default(false)
 
-  Reports Report[]
+  Reports     Report[]
+  messages    Message[]      @relation("UserToMessage")
+  reply       ReplyMessage[]
+  activity    Activity[]
+  Message     Message[]      @relation("sender")
+  GeoupAuthor GroupMessage[] @relation("AUTHOR")
+
+  GroupMessage   GroupMessage[] @relation("GROUP")
+  // GroupMessageGroup GroupMessage[] @relation("receivermany")
+  GroupMessagemany   GroupMessage?  @relation(fields: [groupMessageId], references: [id])
+  groupMessageId String?
 }
 
 model Report {
-  id            String   @id @default(uuid())
+  id            String         @id @default(uuid())
   from          FromTime
   to            ToTime
-  date          DateTime @default(now())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @default(now()) @updatedAt
-  Basis2        Int      @default(5)
-  Interface     Int      @default(5)
-  cms           Int      @default(5)
-  spms          Int      @default(5)
-  newperpay     Int      @default(5)
-  oldperpay     Int      @default(5)
-  utilitymaster Int      @default(5)
-  internet      Int      @default(5)
-  exchangemail  Int      @default(5)
+  date          DateTime       @default(now())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now()) @updatedAt
+  Basis2        Int            @default(5)
+  Interface     Int            @default(5)
+  cms           Int            @default(5)
+  spms          Int            @default(5)
+  newperpay     Int            @default(5)
+  oldperpay     Int            @default(5)
+  utilitymaster Int            @default(5)
+  internet      Int            @default(5)
+  exchangemail  Int            @default(5)
   comments      String?
-  author        User?    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author        User?          @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId      String?
+  message       Message[]
+  GroupMessage  GroupMessage[]
+}
+
+model Message {
+  id         String         @id @default(uuid())
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @default(now()) @updatedAt
+  content    String
+  author     User?          @relation("UserToMessage", fields: [authorId], references: [id], onDelete: Cascade)
+  authorId   String?
+  report     Report?        @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId   String?
+  reply      ReplyMessage[]
+  receiver   User?          @relation("sender", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId String?
+}
+
+model GroupMessage {
+  id           String         @id @default(uuid())
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
+  content      String
+  author       User?          @relation("AUTHOR", fields: [authorId], references: [id], onDelete: Cascade)
+  authorId     String?
+  report       Report?        @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId     String?
+  reply        ReplyMessage[]
+  receiver     User?          @relation("GROUP", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId   String?
+  receivermany User[]
+}
+
+model ReplyMessage {
+  id             String        @id @default(uuid())
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now()) @updatedAt
+  content        String
+  author         User?         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId       String?
+  message        Message?      @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  messageId      String?
+  GroupMessage   GroupMessage? @relation(fields: [groupMessageId], references: [id])
+  groupMessageId String?
+}
+
+model Activity {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  content   String
+  author    User?    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String?
 }
 
 enum Role {
