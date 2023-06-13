@@ -1,6 +1,11 @@
+import { prisma } from "@/config/prisma";
 
 
-import { prisma } from "../../../../components/Prisma/Prisma";
+
+// get all messages
+
+
+
 import { NextResponse,NextRequest } from "next/server";
 
 
@@ -16,7 +21,7 @@ export async function DELETE(req: NextRequest,{params}:{params:Idtype}, res: Nex
     const {id}= params;
     // console.log("REport ",id);
     try{
-        const REportsAvailable= await prisma.report.findUnique({
+        const REportsAvailable= await prisma.message.findUnique({
             where:{
                 id,
             }
@@ -25,7 +30,7 @@ export async function DELETE(req: NextRequest,{params}:{params:Idtype}, res: Nex
         
         
         if(REportsAvailable){
-        const deleteReport= await prisma.report.delete({
+        const deleteReport= await prisma.message.delete({
             where:{
                 id:id
             }
@@ -34,21 +39,21 @@ export async function DELETE(req: NextRequest,{params}:{params:Idtype}, res: Nex
         await prisma.activity.create({
             data:{
                 authorId:REportsAvailable.authorId,
-                content:`Report deleted for ${REportsAvailable.id}` ,
+                content:`message deleted for ${REportsAvailable.id}` ,
             }
         })
             
         
-        return NextResponse.json({message: "Reports deleted"});
+        return NextResponse.json({message: "message deleted"});
     }else{
-        return NextResponse.json({error: "report not found"});
+        return NextResponse.json({error: "message not found"});
     }
 
   
     
 
     }catch(error){
-        return NextResponse.json({error: "error in deleting user"});
+        return NextResponse.json({error: "error in deleting message"});
     }
 
 }
@@ -62,7 +67,7 @@ export async function GET(req: NextRequest,{params}:{params:Idtype}, res: NextRe
     const {id}= params;
     console.log("userid ",id);
     try{
-        const UserAvailable= await prisma.report.findUnique({
+        const UserAvailable= await prisma.message.findUnique({
             where:{
                 id,
             }
@@ -71,7 +76,7 @@ export async function GET(req: NextRequest,{params}:{params:Idtype}, res: NextRe
         
         return NextResponse.json({UserAvailable});
     }catch(error){
-        return NextResponse.json({error: "error in getting user"});
+        return NextResponse.json({error: "error in getting message"});
     }
 }
 

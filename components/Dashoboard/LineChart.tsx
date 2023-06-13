@@ -68,15 +68,30 @@ import {
     "2026",
     "2027",
   ]
+type TimeSlot = 'from_0700AM' | 'from_0800AM' | 'from_0900AM' | 'from_1000AM' | 'from_1100AM' | 'from_1200PM' | 'from_1300PM' | 'from_1400PM' | 'from_1500PM' | 'from_1600PM'|'from_1700PM';
+
+const timeSlots: TimeSlot[] = [
+  'from_0700AM',
+  'from_0800AM',
+  'from_0900AM',
+  'from_1000AM',
+  'from_1100AM',
+  'from_1200PM',
+  'from_1300PM',
+  'from_1400PM',
+  'from_1500PM',
+  'from_1600PM',
+  'from_1700PM',
+];
   
-  const labels = Days.map((application) => application);
+  const labels = timeSlots.map((application) => application);
   
   export const LineData = {
     labels,
     datasets: [
       {
         label: 'BASIS2',
-        data: labels.map(() => faker.number.int({ min:0, max: 5 })),
+        data: [3,4,5,6,7,8,9,6,4,3,2,5],
         borderColor: '#333333',
         backgroundColor: '#333333',
       },

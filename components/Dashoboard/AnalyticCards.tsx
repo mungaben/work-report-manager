@@ -1,11 +1,17 @@
 
 "use client"
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2';
-import { Dougnaut } from './Doughnut';
+
 import ActivityData from '../ActivityData';
 import { DataAvailable } from '../Activitydata';
-import { DataAvailableprevious } from '../Activitydata';
+import { DataAvailableprevious } from '../Activitydata'
+import { useReportStore } from '@/app/utils/Stores/Report';
+
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
+
+import { MyDataType } from '../Reports/TabaleRow';
+import { ReportTypes } from '@/app/utils/Types/Mytypes';
 
 export const applications = [
     'Basis 2',
@@ -20,35 +26,189 @@ export const applications = [
 
 ];
 
+
+
 // useEffect(() => {
 //     console.log(applications)
 // }, [])
 
+ChartJS.register(ArcElement, Tooltip, Legend);
+const AnalyticCards = async () => {
+    const { report } = useReportStore();
+    console.log("reportStore", report);
 
-const AnalyticCards = async() => {
-    const dtaprev= await DataAvailableprevious();
-    console.log("data vailprev",dtaprev);
-    
+    const [dataondate, setdataondate] = useState<ReportTypes[] | string>([])
+    console.log("dataondate", dataondate);
+
+
+    const dtaprev = useCallback(
+        () => {
+            const getdata = async () => {
+                const Dataavail = await DataAvailableprevious()
+                console.log("Dataavail", Dataavail);
+
+                setdataondate(Dataavail)
+
+            }
+        },
+        [dataondate],
+    )
+    const LabelsDta = [
+        "cms",
+        "spms",
+        "oldperpay",
+        "newperpay",
+        "internet",
+        "utilitymaster",
+        "exchangemail",
+        "Basis2",
+        "Interface",
+    ];
+    // const datamapped = report.map((data: ReportTypes) => {
+    //     const mappedData: { label: string, data: any, Daughnut: any }[] = [];
+    //     LabelsDta.forEach((label) => {
+    //         const existingData = mappedData.find((item) => item.label === label);
+    //         if (existingData) {
+    //             existingData.data.push(data[label]);
+    //         } else {
+
+    //             mappedData.push({
+    //                 label,
+    //                 data: [data[label]], // Access the property dynamically using the label
+    //                 //   for each label attach data Daughnut details for it 
+    //                 Daughnut: {
+    //                     labelsdata: ['Red', 'Blue'],
+
+    //                     datasets: [
+    //                         {
+
+    //                             data: [9, 3],
+    //                             backgroundColor: [
+    //                                 'rgba(255, 99, 132, 0.2)',
+    //                                 'rgba(54, 162, 235, 0.2)',
+
+    //                             ],
+    //                             borderColor: [
+    //                                 'rgba(255, 99, 132, 1)',
+    //                                 'rgba(54, 162, 235, 1)',
+
+    //                             ],
+    //                             borderWidth: 2,
+    //                         },
+    //                     ],
+    //                 }
+    //             });
+    //         };
+    //     })
+
+    //     //   console.log("mappedData", mappedData);
+
+    //     return mappedData
+    // })
+
+
+    // console.log("datamapped", datamapped);
+
+
+
+    const fetchData = () => {
+        const dataObj: { [key: string]: { data: any[], datalabel: string, daughnut: any } } = {};
+      
+        LabelsDta.forEach((label) => {
+          dataObj[label] = {
+            data: [],
+            datalabel: label,
+            daughnut: {
+              labelsdata: ['Red', 'Blue'],
+              datasets: [
+                {
+                  data: [], // Initialize an empty data array
+                  backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
+                  borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+                  borderWidth: 2,
+                },
+              ],
+            },
+          };
+        });
+      
+        report.forEach((data: ReportTypes) => {
+          LabelsDta.forEach((label) => {
+            dataObj[label].data.push(data[label]);
+          });
+        });
+      
+        Object.values(dataObj).forEach((item) => {
+          const total = item.data.reduce((acc, value) => acc + value, 0);
+          item.daughnut.datasets[0].data = [total, report.length* 5];
+        });
+      
+        return Object.values(dataObj);
+      };
+      
+      const datamapped = fetchData();
+      
+   
+      console.log("datamapped", datamapped);
+      
+
+
+
+
+
+    // daunaught data **************************
+    const Dougnaut = {
+        labelsdata: ['Red', 'Blue'],
+
+        datasets: [
+            {
+
+                data: [9, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+
+                ],
+                borderWidth: 2,
+            },
+        ],
+    };
+
+    // daunaught data **************************
+
+
+    // console.log("data vailprev",dtaprev());
+
     // console.log("data vailprev",dtaprev);
-    
+    useEffect(() => {
+        dtaprev()
+        console.log("data posted", datamapped);
+
+    }, [])
+
 
     return (
         <div className=' w-full flex flex-row justify-between items-center overflow-x-auto'>
             {/* <ActivityData/> */}
 
             {
-                applications.map((data, index) => (
+                datamapped?.map((data, index) => (
 
                     <div key={index} className=' flex flex-row items-center justify-start bg-[#fafafafa] shadow-md p-2 m-2 rounded-md'>
                         <div>
                             <div className=' block '>
                                 <h3 className=' font-[14px] text-[#333333]/90  text-sm '>
-                                    {data}
+                                    {data.datalabel}
                                 </h3>
                             </div>
                             <div>
                                 <h1 className='text-xs mx-3 '>
-                                    5638
+                                    {data.data.length}
                                 </h1>
                             </div>
                             <div className='flex flex-row '>
@@ -61,7 +221,9 @@ const AnalyticCards = async() => {
 
 
                                 <h4 className=' flex text-xs ' >
-                                    +14% inc
+                                    {
+                                        100-(Math.round(data.daughnut.datasets[0].data[0]/data.daughnut.datasets[0].data[1]*100)) 
+                                    }
                                 </h4>
 
                             </div>
@@ -71,25 +233,25 @@ const AnalyticCards = async() => {
                             <div className=' w-13 h-13  '>
                                 <div className=' absolute left-[35px] top-9 '>
                                     <p className=' text-[#333333]  text-xs flex justify-center items-center pt-2 mx-auto'>
-                                        74%
+                                        {Math.round(data.daughnut.datasets[0].data[0]/data.daughnut.datasets[0].data[1]*100)}%
                                     </p>
 
                                 </div>
-                                <Doughnut data={Dougnaut} height={90} width={90} />
+                                <Doughnut data={data.daughnut} height={90} width={90} />
                             </div>
 
                         </div>
 
 
                     </div>
-    
-          
-
-    ))
 
 
-}
-</div>       
+
+                ))
+
+
+            }
+        </div>
     )
 }
 

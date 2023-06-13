@@ -117,7 +117,7 @@ export const authOptions: NextAuthOptions = {
         // }
 
         if (!credentials?.email || !credentials.password) {
-          console.log("no user credentials");
+          // console.log("no user credentials");
 
           throw new Error('Please enter an email and password')
         }
@@ -128,8 +128,14 @@ export const authOptions: NextAuthOptions = {
             email: credentials.email
           }
         });
+        user && await prisma.activity.create({
+          data:{
+            authorId: user?.id,
+            content: "user logged in/signup",
+          }
+        })
 
-        console.log("user from db ", user);
+        // console.log("user from db ", user);
 
 
         // if no user was found 
@@ -144,7 +150,7 @@ export const authOptions: NextAuthOptions = {
         if (!passwordMatch) {
           throw new Error('Incorrect password')
         }
-       console.log("user from authentication next", user);
+      //  console.log("user from authentication next", user);
        
         return user;
       },
@@ -177,7 +183,7 @@ export const authOptions: NextAuthOptions = {
 
       }
       // localStorage.setItem("token", JSON.stringify(token));
-      console.log("token", token);
+      // console.log("token", token);
 
       return token;
     },
@@ -187,7 +193,7 @@ export const authOptions: NextAuthOptions = {
       if (session?.user) {
         session.user.id = token.sub;
       }
-      console.log("session data", session, token, user);
+      // console.log("session data", session, token, user);
 
       return session;
     },

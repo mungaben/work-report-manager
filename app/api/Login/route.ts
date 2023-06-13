@@ -23,6 +23,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
         }
     })
     if (user && (await bcrypt.compare(body.password, user.password))) {
+        await prisma.activity.create({
+            data: {
+                authorId: user.id,
+                content: "Login",
+            }
+              
+        })
+
         const { password, ...userwithoutpassword } = user
         return NextResponse.json({ userwithoutpassword }, { status: 200 })
 

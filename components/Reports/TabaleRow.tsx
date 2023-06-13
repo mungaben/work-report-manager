@@ -7,12 +7,12 @@ import { set } from 'react-hook-form';
 import { useRouter } from "next/navigation";
 import { useSession } from 'next-auth/react';
 import { DataAvailable } from '../Activitydata';
-console.log("Data acvailables",DataAvailable())
+// console.log("Data acvailables", DataAvailable())
 import { DataAvailableprevious } from '../Activitydata';
-console.log("data vailable previous daya",DataAvailableprevious());
+// console.log("data vailable previous daya", DataAvailableprevious());
 
 
-type MyDataType =
+export type MyDataType =
     {
         from: 'from_0700AM' | 'from_0800AM' | 'from_0900AM' | 'from_1000AM' | 'from_1100AM' | 'from_1200PM' | 'from_1300PM' | 'from_1400PM' | 'from_1500PM' | 'from_1600PM';
         to: 'to_0800AM' | 'to_0900AM' | 'to_1000AM' | 'to_1100AM' | 'to_1200PM' | 'to_1300PM' | 'to_1400PM' | 'to_1500PM' | 'to_1600PM' | 'to_1700PM'
@@ -26,7 +26,7 @@ type MyDataType =
         internet: number | string,
         exchangemail: number | string,
         comments: string;
-        authorId: string;
+        authorId?: string;
 
     };
 enum FromTime {
@@ -55,25 +55,26 @@ enum ToTime {
     to_1700AM
 }
 
-type UserData = {
-    email: string;
-    id: string;
-    name: string;
-};
 
 type SessionData = {
-    user: UserData;
-    expires: string;
-};
+    user?: {
+      id?: string;
+      name?: string | null | undefined;
+      email?: string | null | undefined;
+      image?: string | null | undefined;
+    };
+  };
 
 const TabaleRow = () => {
     const { data: session } = useSession();
     console.log("session data in table", session);
+    // const id: string = session?.user?.id;
+    // Accessing user session data with the added `id` property
+    const { id }:SessionData["user"]= session?.user ?? {};
 
-    const [authorId, setAuthorId] = useState(session?.user.id);
+    const [authorId, setAuthorId] = useState<string>(id||"");
     console.log("authorId data from table", authorId);
 
-    const router = useRouter();
     const defaultData: MyDataType[] = [{
         from: 'from_0700AM',
         to: 'to_0800AM',
@@ -93,7 +94,6 @@ const TabaleRow = () => {
     ]
 
 
-    const dataList = Object.entries(defaultData).map(([key, value]) => (value));
 
 
 
@@ -255,7 +255,6 @@ const TabaleRow = () => {
     const handleEdit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         setDatadis(prev => !prev)
-        const value: string = event.currentTarget.value;
         const id = Number(event.currentTarget.id);
         console.log("id", id);
         const data = tabledata[id]
@@ -313,7 +312,7 @@ const TabaleRow = () => {
 
 
 
-        router.refresh()
+        // router.refresh()
     };
 
 
@@ -323,6 +322,7 @@ const TabaleRow = () => {
     // use effect
     useEffect(() => {
         settabledata(defaultData)
+        // setAuthorId(id)
     }, []);
 
 

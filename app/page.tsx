@@ -24,18 +24,24 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen md:m-4 flex-col bg-white  ">
+      
+      <div>
       {
         session?.status === "authenticated" ? (
           <Suspense fallback={<div>Loading...</div>}>
             <MainPage />
           </Suspense>
-        ) : (session?.status === "loading" ? (<div> loading ...</div>) : (
+        ) : 
+        
+        
+        (session?.status === "loading" ? (<div> loading ...</div>) : (
           <div className="flex h-screen w-full items-center justify-center">
             {/* <Register/> */}
             <Login />
           </div>
         ))
       }
+    </div>
 
 
     </main>

@@ -24,6 +24,7 @@
     "bcryptjs": "^2.4.3",
     "chart.js": "^4.3.0",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "dayjs": "^1.11.8",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
     "faker": "^6.6.6",
@@ -32,6 +33,7 @@
     "next-auth": "^4.22.1",
     "postcss": "8.4.23",
     "react": "18.2.0",
+    "react-calendar": "^4.2.1",
     "react-chartjs-2": "^5.2.0",
     "react-data-grid": "^7.0.0-beta.30",
     "react-dom": "18.2.0",
@@ -41,7 +43,8 @@
     "react-table": "^7.8.0",
     "swr": "^2.1.5",
     "tailwindcss": "3.3.2",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",

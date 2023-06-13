@@ -62,6 +62,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
             }
         });
         console.log("report", report);
+        await prisma.activity.create({
+            data:{
+                authorId: authorId,
+                content: "Reported to system",
+                
+                
+            }
+        })
         return NextResponse.json(report);
     } catch (err) {
         if (err) {
@@ -106,6 +114,14 @@ export async function PUT(req: NextRequest, res: NextResponse) {
                 exchangemail: data.exchangemail,
                 comments: data.comments,
                 authorId: data.authorId,
+            }
+        })
+        await prisma.activity.create({
+            data:{
+                authorId: data.authorId,
+                content: "Updated report",
+                
+                
             }
         })
         return NextResponse.json(report)

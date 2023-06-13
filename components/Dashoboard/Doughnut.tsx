@@ -2,9 +2,7 @@
 
 "use client"
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 
 // import { DataAvailable } from '../Activitydata';
 // console.log("Data acvailables",DataAvailable());
