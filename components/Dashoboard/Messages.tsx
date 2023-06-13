@@ -64,7 +64,7 @@ const Messages = () => {
                             work Title
                         </h3>
                         <p className=' font-[12px] text-[#333333] ' >
-                            Kudos! Lorem ipsum dolor sit amet consectetur
+                            Kudos! Lorem ipsum dolor sit 
                         </p>
 
                     </div>

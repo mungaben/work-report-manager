@@ -4,6 +4,7 @@
 
 import React from 'react'
 import Image from 'next/image';
+import MeassgeForm from '../Dashoboard/MeassgeForm';
 export const data = [
   {
     "id": 1,
@@ -45,6 +46,9 @@ const Messages = () => {
                 
 
                 <p className=' text-start ml-4 items-start justify-start w-full break-words truncate'>{item.message}</p>
+                <div>
+                <MeassgeForm/>
+                </div>
 
 
               </div>

@@ -91,30 +91,20 @@ export async function PUT(req: NextRequest, res: NextResponse) {
 
 
     try {
-        const report = await prisma.report.update({
+        const report = await prisma.message.update({
             where: {
                 id: data.id
             },
             data: {
-                Basis2: data.Basis2,
-                from: data.from,
-                to: data.to,
-                Interface: data.Interface,
-                cms: data.cms,
-                spms: data.spms,
-                newperpay: data.newperpay,
-                oldperpay: data.oldperpay,
-                utilitymaster: data.utilitymaster,
-                internet: data.internet,
-                exchangemail: data.exchangemail,
-                comments: data.comments,
+                content: data.content,
+                receiverId: data.receiverId,
                 authorId: data.authorId,
             }
         })
         await prisma.activity.create({
             data:{
                 authorId: data.authorId,
-                content: "Updated report",
+                content: "Updated message",
                 
                 
             }

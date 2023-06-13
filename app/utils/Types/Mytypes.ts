@@ -25,7 +25,7 @@ export type MyDataType =
 export interface ReportTypes {
     [key: string]: any;
     Basis2: number
-    Interface:number;
+    Interface: number;
     author: {
         createdAt: string;
         email: string;
@@ -61,15 +61,83 @@ export type ActivityTypes = {
     content: string;
     authorId: string;
     author: {
-      id: string;
-      name: string;
-      email: string;
-      password: string;
-      createdAt: string;
-      updatedAt: string;
-      role: string;
-      online: boolean;
-      groupMessageId: string;
+        id: string;
+        name: string;
+        email: string;
+        password: string;
+        createdAt: string;
+        updatedAt: string;
+        role: string;
+        online: boolean;
+        groupMessageId: string;
     };
-  };
+};
+
+
+export type Role = 'USER' | 'ADMIN';
+
+export type User = {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    createdAt: Date;
+    updatedAt: Date;
+    role: Role;
+    online: boolean;
+    Reports: Report[];
+    messages: Message[];
+    reply: ReplyMessage[];
+    activity: ActivityTypes[];
+    Message: Message[];
+    GeoupAuthor: GroupMessage[];
+    GroupMessage: GroupMessage[];
+    GroupMessagemany: GroupMessage | null;
+    groupMessageId: string | null;
+};
+
+
+export type Message = {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    content: string;
+    author: User | null;
+    authorId: string | null;
+    report: Report | null;
+    reportId: string | null;
+    reply: ReplyMessage[];
+    receiver: User | null;
+    receiverId: string | null;
+};
+
+
+export type GroupMessage = {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    content: string;
+    author: User | null;
+    authorId: string | null;
+    report: Report | null;
+    reportId: string | null;
+    reply: ReplyMessage[];
+    receiver: User | null;
+    receiverId: string | null;
+    receivermany: User[];
+};
+
+
+export type ReplyMessage = {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    content: string;
+    author: User | null;
+    authorId: string | null;
+    message: Message | null;
+    messageId: string | null;
+    GroupMessage: GroupMessage | null;
+    groupMessageId: string | null;
+};
 
