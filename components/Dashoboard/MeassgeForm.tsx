@@ -24,7 +24,9 @@ const MeassgeForm = () => {
         return () => subscription.unsubscribe();
     }, [watch]);
 
-    const onSubmit = (data: IFormInputs) => console.log(data);
+    const onSubmit = (data: IFormInputs) => {
+        console.log(data);
+    }
   
       
         const value = watchFields[0];
