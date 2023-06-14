@@ -10,6 +10,7 @@ import { NextResponse, NextRequest } from "next/server";
 
 
 
+
 // get request with an id
 
 type Idtype = {
