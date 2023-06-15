@@ -132,8 +132,8 @@ const AnalyticCards = async () => {
           };
         });
       
-        report.forEach((data: ReportTypes) => {
-          LabelsDta.forEach((label) => {
+       report && report?.forEach((data: ReportTypes) => {
+          LabelsDta?.forEach((label) => {
             dataObj[label].data.push(data[label]);
           });
         });

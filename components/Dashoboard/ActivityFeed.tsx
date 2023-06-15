@@ -35,14 +35,18 @@ import { RiDeleteBin6Line } from 'react-icons/ri'
 import Image from 'next/image'
 import React, { useCallback, useEffect } from 'react'
 import { ActivityTypes } from '@/app/utils/Types/Mytypes'
+import { useSession } from 'next-auth/react'
+
 
 const ActivityFeed = () => {
     const { setActivities, activities } = useActivitiesStore()
+    const { data: session } = useSession();
+    const Id = session?.user?.id;
 
     const fetchActivitiesData = useCallback(async () => {
         try {
             const activities: AxiosResponse<ActivityTypes[]> = await axios.get("/api/Activity"); // Replace with your API fetching logic
-            const dataactivies = activities.data;
+            const dataactivies = activities.data?.filter((item: ActivityTypes) => item.authorId === Id);
             setActivities(dataactivies);
         } catch (error) {
             console.error("Error fetching activities:", error);
@@ -63,7 +67,7 @@ const ActivityFeed = () => {
                 </div>
             </div>
             {
-                activities.slice(0,5).map((item, index) => (
+                activities.slice(0, 5).map((item, index) => (
 
                     <div key={item.id} className=' flex flex-col justify-center items-start  '>
                         {/* activity with image  and description on clivck  image of works=>matched color  loop all activites for user has done oprder by datae recent  */}

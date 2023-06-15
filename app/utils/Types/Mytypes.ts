@@ -98,17 +98,17 @@ export type User = {
 
 
 export type Message = {
-    id: string;
-    createdAt: Date;
-    updatedAt: Date;
+    id?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
     content: string;
-    author: User | null;
-    authorId: string | null;
-    report: Report | null;
-    reportId: string | null;
-    reply: ReplyMessage[];
-    receiver: User | null;
-    receiverId: string | null;
+    author?: User | null;
+    authorId?: string | null;
+    report?: Report | null;
+    reportId?: string | null;
+    reply?: ReplyMessage[];
+    receiver?: User | null;
+    receiverId?: string | null;
 };
 
 

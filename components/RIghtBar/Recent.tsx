@@ -4,6 +4,8 @@
 
 import React from 'react'
 import Image from 'next/image';
+import { useMessageStore } from '@/app/utils/Stores/Messages';
+import MeassgeForm from '../Dashoboard/MessgeForm';
 
 export const data = [
   {
@@ -24,15 +26,18 @@ export const data = [
 
 
 const Recent = () => {
+  const { message,addMessage,setMessage }=useMessageStore()
+  console.log("uyguky",message);
+  
   return (
     <div className=' w-full flex flex-col  transition  justify-start md:ml-5  '>
-      <div className='text-[#333333]/90 text-4xl -ml-5  text-start  p-2 hover:underline font-semibold m-4 justify-start items-center  '>Recent</div>
-      <div className=' w-full flex justify-start flex-col '>
-        {data.map((item) => (
-          <div key={item.id} className='transition  flex-1 justify-start   p-1 mx-5 pr-5 space-y-5 my-3'>
-            <div className=' flex flex-row mx-2   justify-start items-start mr-5  bg-[#878787]/60 rounded-lg  '>
+      <div className='text-[#333333]/90 text-4xl -ml-5  text-start  p-2 hover:underline font-semibold m-4 justify-start  items-center  '>Recent</div>
+      <div className=' w-full flex justify-start flex-col items-start '>
+        {message?.slice(0,4).map((item) => (
+          <div key={item.id} className='transition  flex-1 justify-start items-start   p-1 mx-5 pr-5 space-y-5 my-3  bg-[#878787]/60 rounded-md'>
+            <div className=' flex flex-row mx-2   justify-start items-start mr-5    rounded-lg  '>
               <Image
-                src={item.avatar}
+                src={'/sidebar/w.png'}
                 width={50}
                 height={50}
                 alt="avatar"
@@ -40,20 +45,27 @@ const Recent = () => {
               />
               <div className=' flex w-full flex-col space-x-0 space-y-0 justify-center  mx-4   '>
                <div className='w-full'>
-               <p className=' text-start items-center  tracking-wider text-2xl font-medium  '>{item.name}</p>
+               <p className=' text-start items-center  tracking-wider text-2xl font-medium  '>{item.author?.name}</p>
 
                </div>
                 
 
-                <p className=' text-start ml-4 items-start justify-start w-full break-words truncate'>{item.message}</p>
+                <p className=' text-start ml-4 items-start justify-start truncate break-words max-md whitespace-pre-wrap'>{item.content.slice(0,10)}</p>
+
 
 
               </div>
+             
 
             </div>
-
+            <div>
+            <MeassgeForm receiverId={item?.receiverId}/>
+            </div>
           </div>
         ))}
+
+
+        
       </div>
     </div>
   )
