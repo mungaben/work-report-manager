@@ -142,15 +142,13 @@ const Tablerows = () => {
         console.log("edit", value);
         // get index 
         const index = datasav?.findIndex((data) => data.id === id)
-        console.log("index", index);
-        console.log("datasav", datasav);
-        console.log("datasav", datasav[index]);
+       
         //  add the index data to datasav
         const updatedData = { ...datasav[index] }
-        console.log("updateddata", updatedData);
+   
         // add updated data to datasav 
         const dataToUpdate = { ...datasav[index] = updatedData }
-        console.log("datatoUpdated", dataToUpdate);
+   
 
 
 
@@ -164,12 +162,10 @@ const Tablerows = () => {
         const value = event.currentTarget.value;
         const id = event.currentTarget.id;
 
-        console.log("id", id);
-        console.log("edit", value);
-        console.log("data avail", datasav);
+   
 
         const datasavcopy = [...datasav]
-        console.log("datasavcopy", datasavcopy);
+       
 
 
 

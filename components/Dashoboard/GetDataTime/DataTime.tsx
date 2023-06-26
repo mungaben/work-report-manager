@@ -7,21 +7,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { Line } from 'react-chartjs-2';
 
-import { LineData, options } from '../LineChart';
 import { ReportTypes } from '@/app/utils/Types/Mytypes';
+import { options } from '../LineChart';
 
+import { useDatetime } from '@/app/utils/Stores/Datetime';
+import { useReportStore } from '@/app/utils/Stores/Report';
 import dayjs from "dayjs";
 import 'dayjs/locale/en'; // Import the desired locale file (e.g., English)
 import weekday from 'dayjs/plugin/weekday';
+import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import Calender from './Calender';
-import { useReportStore } from '@/app/utils/Stores/Report';
-import { useDatetime } from '@/app/utils/Stores/Datetime';
-import Calendar from 'react-calendar'
 dayjs.extend(weekday); // Extend dayjs with the weekday plugin
 
 type FormValues = {
@@ -158,68 +157,68 @@ function DataTime(props: DataTimeProps) {
 
 
     const { register, handleSubmit, watch } = useForm<FormValues>();
-    const [day, setdays] = useState("Monday");
-    const [year, setyears] = useState("2019");
-    const [month, setmonth] = useState("January");
-    const [showWhat, setshowWhat] = useState<string>("day")
-    const [FilterData, setFilterData] = useState<string[]>(days);
-    const [time, settime] = useState(props.time);
+    // const [day, setdays] = useState("Monday");
+    // const [year, setyears] = useState("2019");
+    // const [month, setmonth] = useState("January");
+    // const [showWhat, setshowWhat] = useState<string>("day")
+    // const [FilterData, setFilterData] = useState<string[]>(days);
+    // const [time, settime] = useState(props.time);
 
     const [toggle, settoggle] = useState(false)
-    const [days1, setDay] = useState(new Date());
+    // const [days1, setDay] = useState(new Date());
     // console.log("passed date set", days1);
 
 
 
     // set data avail to 
-    const [BASIS2, setBASIS2] = useState<number>()
-    const [INTERFACE, setInterface] = useState<number>()
-    const [CMS, setCMS] = useState<number>()
-    const [SPMS, setSPM] = useState<number>()
-    // console.log("passed data", CMS);
+    // const [BASIS2, setBASIS2] = useState<number>()
+    // const [INTERFACE, setInterface] = useState<number>()
+    // const [CMS, setCMS] = useState<number>()
+    // const [SPMS, setSPM] = useState<number>()
+    // // console.log("passed data", CMS);
 
-    const [NewPREPAY, setNewPREPAY] = useState<number>()
-    const [OLDPERPAY, setOLDPERPAY] = useState<number>()
-    const [utilitymaster, setUtilitymaster] = useState<number>()
-    const [exchangemail, setExchangemail] = useState<number>()
-    const [INTERNET, setINTERNET] = useState<number>()
-    const [ExchangeBrowser, setExchangeBrowser] = useState<number>()
+    // const [NewPREPAY, setNewPREPAY] = useState<number>()
+    // const [OLDPERPAY, setOLDPERPAY] = useState<number>()
+    // const [utilitymaster, setUtilitymaster] = useState<number>()
+    // const [exchangemail, setExchangemail] = useState<number>()
+    // const [INTERNET, setINTERNET] = useState<number>()
+    // const [ExchangeBrowser, setExchangeBrowser] = useState<number>()
     // const [Comments, setComments] = useState()
     // data avail
 
 
-    const onSubmit = (data: FormValues) => {
-        console.log(data); // Access the selected month value through data.month
-    };
-    const On1Submit = (data: FormValues) => {
-        console.log(data);
+    // const onSubmit = (data: FormValues) => {
+    //     console.log(data); // Access the selected month value through data.month
+    // };
+    // const On1Submit = (data: FormValues) => {
+    //     console.log(data);
 
-    };
+    // };
     const handleButtonclick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         settoggle(!toggle);
 
     }
 
-    const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setshowWhat(event.target.value);
-        if (event.target.value === 'day') {
-            setdays("day");
-            setFilterData(days);
-        } else if (event.target.value === 'year') {
-            setdays("year");
-            setFilterData(years)
-        } else if (event.target.value === 'month') {
-            setdays("month");
-            setFilterData(months)
-        } else if (event.target.value === 'Today') {
-            setdays("today");
-            setFilterData(today)
-        }
-    };
-    const handleSearchChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    // const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    //     setshowWhat(event.target.value);
+    //     if (event.target.value === 'day') {
+    //         setdays("day");
+    //         setFilterData(days);
+    //     } else if (event.target.value === 'year') {
+    //         setdays("year");
+    //         setFilterData(years)
+    //     } else if (event.target.value === 'month') {
+    //         setdays("month");
+    //         setFilterData(months)
+    //     } else if (event.target.value === 'Today') {
+    //         setdays("today");
+    //         setFilterData(today)
+    //     }
+    // };
+    // const handleSearchChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 
-    }
+    // }
     // get dayta by type of haeder by  from 7 to 5pm in each day by basis ,interface ,cms ,spms ,new prepay ,old prepay ,internet,exchge
     // get all data 
     // getdat that matches the date 
@@ -293,30 +292,25 @@ function DataTime(props: DataTimeProps) {
             exchangemailtotal += exchangemail;
             Basis2total += Basis2;
             Interfacetotal += Interface;
-
-
-
-
-
         })
-        const cmstotalavg = cmstotal / DataAvail.length;
-        setCMS(cmstotalavg);
-        const spmstotalavg = spmstotal / DataAvail.length;
-        setSPM(spmstotalavg);
-        const oldperpaytotalavg = oldperpaytotal / DataAvail.length;
-        setOLDPERPAY(oldperpaytotalavg);
-        const newperpaytotalavg = newperpaytotal / DataAvail.length;
-        setNewPREPAY(newperpaytotalavg);
-        const internettotalavg = internettotal / DataAvail.length;
-        setINTERNET(internettotalavg);
-        const utilitymastertotalavg = utilitymastertotal / DataAvail.length;
-        setUtilitymaster(utilitymastertotalavg);
-        const exchangemailtotalavg = exchangemailtotal / DataAvail.length;
-        setExchangemail(exchangemailtotalavg);
-        const Basis2totalavg = Basis2total / DataAvail.length;
-        setBASIS2(Basis2totalavg);
-        const Interfacetotalavg = Interfacetotal / DataAvail.length;
-        setInterface(Interfacetotalavg);
+        // const cmstotalavg = cmstotal / DataAvail.length;
+        // setCMS(cmstotalavg);
+        // const spmstotalavg = spmstotal / DataAvail.length;
+        // setSPM(spmstotalavg);
+        // const oldperpaytotalavg = oldperpaytotal / DataAvail.length;
+        // setOLDPERPAY(oldperpaytotalavg);
+        // const newperpaytotalavg = newperpaytotal / DataAvail.length;
+        // setNewPREPAY(newperpaytotalavg);
+        // const internettotalavg = internettotal / DataAvail.length;
+        // setINTERNET(internettotalavg);
+        // const utilitymastertotalavg = utilitymastertotal / DataAvail.length;
+        // setUtilitymaster(utilitymastertotalavg);
+        // const exchangemailtotalavg = exchangemailtotal / DataAvail.length;
+        // setExchangemail(exchangemailtotalavg);
+        // const Basis2totalavg = Basis2total / DataAvail.length;
+        // setBASIS2(Basis2totalavg);
+        // const Interfacetotalavg = Interfacetotal / DataAvail.length;
+        // setInterface(Interfacetotalavg);
         // console.log("camstotalavg", cmstotalavg);
 
 
@@ -388,9 +382,9 @@ function DataTime(props: DataTimeProps) {
     // const TodayDate = dayjs().endOf('day').toDate();
     return (
         <div>
-            {/* <div className=' flex flex-row justify-between items-center w-full '> */}
-            {/* <div className=' flex items-start'>
-                    <form onSubmit={handleSubmit(On1Submit)} className=' flex items-center justify-center' >
+            {/* <div className='flex flex-row items-center justify-between w-full '> */}
+            {/* <div className='flex items-start '>
+                    <form onSubmit={handleSubmit(On1Submit)} className='flex items-center justify-center ' >
                         <select {...register("type")} onChange={handleTypeChange}>
                             <option value="day">Days</option>
                             <option value="year">Year</option>
@@ -404,10 +398,10 @@ function DataTime(props: DataTimeProps) {
             {/* </form> */}
             {/* </div>  */}
 
-            {/* <div className=' flex items-end  '>
+            {/* <div className='flex items-end '>
 
 
-                    <form onSubmit={handleSubmit(onSubmit)} className=' flex items-center justify-center'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='flex items-center justify-center '>
                         <select {...register('month')} onChange={handleSearchChange} className=' flex justify-end  from-[#377DFF]/50 to-[#37CB87]/50'>
                             {
                                 FilterData.map((data, index) => {
@@ -426,10 +420,10 @@ function DataTime(props: DataTimeProps) {
 
             {/* </div> */}
             {
-                toggle ? <div className=' flex justify-center items-center  '>
-                    <div className='bg-green-300 flex rounded-md  '>
+                toggle ? <div className='flex items-center justify-center '>
+                    <div className='flex bg-green-300 rounded-md '>
                         <div className=' transition  delay-[2000] hover:animate-none  hover:delay-500' >
-                            <div className=' flex flex-col '>
+                            <div className='flex flex-col '>
                                 <h1 className=' flex justify-center items-center text-[#333333]/60 p-2' >Selected Date: {selectedDate.toLocaleDateString()}</h1>
                                 <Calendar onChange={handleDateChange}
                                     value={selectedDate}
@@ -439,7 +433,7 @@ function DataTime(props: DataTimeProps) {
                         </div>
                     </div>
                 </div> :
-                    <div className=' flex  justify-center items-center  '>
+                    <div className='flex items-center justify-center '>
                         <div className=' block bg-[#fafafa]/40  text-[#333333]/70 text-xl  font-thin hover:font-semi-bold'>
                             <button className=' bg-[#fafafa] rounded-lg p-2 mx-2 shadow-sm border-[1px] border-black' onClick={handleButtonclick}>{dayjs(selectedDate).format('ddd MMM DD')}</button>
                         </div>

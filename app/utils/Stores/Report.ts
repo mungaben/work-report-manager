@@ -7,6 +7,7 @@ import { create } from 'zustand';
 import { ReportTypes } from '../Types/Mytypes';
 import axios from 'axios';
 
+
 const url = "http://localhost:3000/api/Reports"
 
 interface ReportStoreTypes {
@@ -101,7 +102,7 @@ const fetchInitialData = async () => {
   };
   
   // Call the fetchInitialData function when the component mounts
-  fetchInitialData();
+fetchInitialData();
   
   
   

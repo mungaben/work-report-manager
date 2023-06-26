@@ -3,11 +3,11 @@
 import React from 'react'
 
 const NavBar = () => {
-    const name = "Emma"
+    const name = "John Doe"
     return (
 
 
-        <div className=' flex flex-col p-4 justify-start '>
+        <div className='fixed flex flex-col justify-start w-full p-4 '>
             <h2 className=' font-sans text-3xl font-[23px]'>
                 Dashboard
             </h2>

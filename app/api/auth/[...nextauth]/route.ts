@@ -1,13 +1,12 @@
 
 import { prisma } from "@/components/Prisma/Prisma";
-import { compare } from "bcryptjs";
 import * as bcrypt from "bcryptjs";
 // 
 
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 
 
@@ -168,7 +167,9 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
   signIn: "/auth/signin",
-    // error: "/auth/error",
+    error: "/auth/error",
+    
+    // signOut: "/auth/signout",
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -205,4 +206,4 @@ export const authOptions: NextAuthOptions = {
 
 
 const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };

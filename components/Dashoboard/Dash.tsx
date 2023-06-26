@@ -12,26 +12,27 @@ import Messages from './Messages'
 
 const Dash = () => {
     return (
-        <div className=' flex flex-col'>
-            <nav className=' flex  flex-row  justify-between  items-start   '>
-                <div className='flex justify-start items-start  '>
+        <div className='flex flex-col '>
+            <nav className='flex flex-row items-start justify-between '>
+                <div className='flex items-start justify-start '>
                     <NavBar />
                 </div>
-                <div className=' flex flex-row  justify-end items-center w-full rounded-sm  mt-6 p-4 '>
+                <div className='flex flex-row items-center justify-end w-full p-4 mt-6 rounded-sm '>
                     <SearchBar />
                 </div>
             </nav>
-            <div className=' md:mx-4  my-4  flex'>
+            <div className='flex my-4  md:mx-4'>
+                {/*   @ts-expect-error Server Component */}
                 <AnalyticCards />
             </div>
             <div>
                 <CenterCard />
             </div>
-            <div className=' w-full flex flex-row justify-between items-center '>
-                <div className=' w-3/5 flex items-center'>
+            <div className='flex flex-row items-center justify-between w-full '>
+                <div className='flex items-center w-3/5 '>
                     <ActivityFeed />
                 </div>
-                <div className='w-2/5 flex items-center '>
+                <div className='flex items-center w-2/5 '>
                     <Messages />
                 </div>
             </div>

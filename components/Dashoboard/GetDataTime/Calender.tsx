@@ -48,7 +48,7 @@ const Calender:React.FC<CalenderProps> = ({settoggle,toggle} ) => {
 
     return (
         <div className=' transition animate-bounce delay-[2000] hover:animate-none  hover:delay-500' >
-            <div className=' flex flex-col '>
+            <div className='flex flex-col '>
                 <h1 className=' flex justify-center items-center text-[#333333]/60 p-2' >Selected Date: {selectedDate.toLocaleDateString()}</h1>
                 <Calendar onChange={handleDateChange}
                     value={selectedDate}
