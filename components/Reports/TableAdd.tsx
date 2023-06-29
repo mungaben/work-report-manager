@@ -103,7 +103,7 @@ const timeSlots = [
                 {/* daily  report */}
                 {
                     timeSlots.map((datas, index) => (
-                        <React.Fragment>
+                        <React.Fragment key={index}>
                             <TabaleRow keys={index} />
 
 

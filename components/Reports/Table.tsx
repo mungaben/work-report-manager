@@ -116,7 +116,7 @@ const Table = () => {
                         {rows.map((row, index) => {
                             prepareRow(row)
                             return (
-                                <tr   {...row.getRowProps()} className=' p-2 m-2'>
+                                <tr key={index}  {...row.getRowProps()} className=' p-2 m-2'>
                                     {row.cells?.map((cell, index) => {
                                         return <td  {...cell.getCellProps()} key={String(row.id) + index} className=' border border-gray-400 '>
 
