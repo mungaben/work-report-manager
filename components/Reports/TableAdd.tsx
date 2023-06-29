@@ -41,6 +41,20 @@ type MyDataType =
 
 const TableAdd = () => {
     const [TableData, setTableData] = useState<MyDataType[]>()
+
+
+const timeSlots = [
+    'FROM_0700',
+    'FROM_0800',
+    'FROM_0900',
+    'FROM_1000',
+    'FROM_1100',
+    'FROM_1200',
+    'FROM_1300',
+    'FROM_1400',
+    'FROM_1500',
+    'FROM_1600',
+  ];
   
 
 
@@ -51,7 +65,7 @@ const TableAdd = () => {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 
 
-                <tr className=' '>
+                <tr className=''>
                     <th scope="col" className="p-4">
                         <div className="flex items-center">
                             <input
@@ -88,9 +102,9 @@ const TableAdd = () => {
             <tbody>
                 {/* daily  report */}
                 {
-                    Array(6).fill(0).map((_, index) => (
+                    timeSlots.map((datas, index) => (
                         <React.Fragment>
-                            <TabaleRow />
+                            <TabaleRow keys={index} />
 
 
                         </React.Fragment>
