@@ -104,7 +104,7 @@ export type Message = {
     content: string;
     author?: User | null;
     authorId?: string | null;
-    report?: Report | null;
+    report?: ReportTypes| null;
     reportId?: string | null;
     reply?: ReplyMessage[];
     receiver?: User | null;
@@ -119,7 +119,7 @@ export type GroupMessage = {
     content: string;
     author: User | null;
     authorId: string | null;
-    report: Report | null;
+    report:ReportTypes | null;
     reportId: string | null;
     reply: ReplyMessage[];
     receiver: User | null;
