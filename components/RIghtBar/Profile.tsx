@@ -6,7 +6,7 @@ import React from 'react'
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 
-const profile = () => {
+const Profile = () => {
   const { data: session } = useSession();
   console.log(session?.user?.name);
   return (
@@ -36,4 +36,4 @@ const profile = () => {
   )
 }
 
-export default profile
+export default Profile
