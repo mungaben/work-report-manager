@@ -51,7 +51,7 @@ const ActivityFeed = () => {
         } catch (error) {
             console.error("Error fetching activities:", error);
         }
-    }, []);
+    }, [Id]);
 
     useEffect(() => {
         fetchActivitiesData();

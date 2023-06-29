@@ -321,7 +321,7 @@ const Table2 = () => {
                                 timedatas.map((data, index) => (
 
 
-                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200/70 dark:hover:bg-gray-600">
+                                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200/70 dark:hover:bg-gray-600">
                                         {/* index col */}
                                         <td className="w-4 p-4">
                                             <div className="flex items-center ">
