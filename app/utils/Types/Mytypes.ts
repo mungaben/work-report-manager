@@ -85,7 +85,7 @@ export type User = {
     updatedAt: Date;
     role: Role;
     online: boolean;
-    Reports: Report[];
+    Reports: ReportTypes[];
     messages: Message[];
     reply: ReplyMessage[];
     activity: ActivityTypes[];
