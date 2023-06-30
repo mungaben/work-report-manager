@@ -128,7 +128,7 @@ export const authOptions: NextAuthOptions = {
           }
         });
         user && await prisma.activity.create({
-          data:{
+          data: {
             authorId: user?.id,
             content: "user logged in/signup",
           }
@@ -149,8 +149,8 @@ export const authOptions: NextAuthOptions = {
         if (!passwordMatch) {
           throw new Error('Incorrect password')
         }
-      //  console.log("user from authentication next", user);
-       
+        //  console.log("user from authentication next", user);
+
         return user;
       },
 
@@ -166,17 +166,24 @@ export const authOptions: NextAuthOptions = {
 
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-  signIn: "/auth/signin",
+    signIn: "/auth/signin",
     error: "/auth/error",
-    
+
     // signOut: "/auth/signout",
   },
+  // pages: {
+  //   signIn: '/auth/signin',
+  //   signOut: '/auth/signout',
+  //   error: '/auth/error', // Error code passed in query string as ?error=
+  //   verifyRequest: '/auth/verify-request', // (used for check email message)
+  //   newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+  // },
   callbacks: {
     async jwt({ token, user }) {
       // Persist the user's JWT in the token response
       if (user) {
         token.id = user.id;
-        
+
         token.email = user.email;
         token.sub = user.id;
         token.name = user.name;
@@ -192,7 +199,13 @@ export const authOptions: NextAuthOptions = {
       // Re-use the session across requests
 
       if (session?.user) {
-        session.user.id = token.sub;
+        return{
+          ...session,
+          user: {
+            ...session.user,
+            id: token.sub,
+          }
+        }
       }
       // console.log("session data", session, token, user);
 

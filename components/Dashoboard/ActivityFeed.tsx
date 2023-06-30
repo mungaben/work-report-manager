@@ -35,14 +35,32 @@ import { RiDeleteBin6Line } from 'react-icons/ri'
 import Image from 'next/image'
 import React, { useCallback, useEffect } from 'react'
 import { ActivityTypes } from '@/app/utils/Types/Mytypes'
-import { useSession } from 'next-auth/react'
+import {useSession}  from 'next-auth/react'
+import Session from '@/app/Sessions/Session'
+interface User {
+    id?: string | null | undefined;
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    image?: string | null | undefined;
+  }
+  interface Session {
+    user?: User | null | undefined;
+    // Other session properties...
+  }
 
 
 const ActivityFeed = () => {
     const { setActivities, activities } = useActivitiesStore()
-    const { data: session } = useSession();
-    const Id = session?.user?.id;
+    const { data:session,update} = useSession();
 
+
+    const Id = session?.user?.id
+
+
+    // console.log("id",3*30,Id);
+    
+
+    
     const fetchActivitiesData = useCallback(async () => {
         try {
             const activities: AxiosResponse<ActivityTypes[]> = await axios.get("/api/Activity"); // Replace with your API fetching logic
