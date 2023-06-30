@@ -4,12 +4,10 @@
 import { Suspense, useState } from 'react'
 
 // import { Session } from 'inspector'
+import { Session } from 'next-auth/core/types'
 import { useSession } from 'next-auth/react'
 import MainPage from './Main/page'
-import Login from './auth/signin/page'
-import { Session } from 'next-auth/core/types'
-import {DefaultUser} from 'next-auth'
-import Register from './auth/register/page'
+import Login from './auths/signin/page'
 type UseSessionResponse = {
   data: Session | null; // Represents the session data if the user is authenticated, otherwise null
   loading: boolean; // Indicates whether the session data is still being fetched

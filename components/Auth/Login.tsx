@@ -2,7 +2,7 @@
 "use client"
 import React from 'react'
 import { signIn, signOut } from "next-auth/react"
-// import sessiondata from '@/app/api/auth/sessions'
+
 
 
 const Login = async () => {
