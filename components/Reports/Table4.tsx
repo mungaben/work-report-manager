@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import generateFakeData from './DataFake'
+// import generateFakeData from './DataFake'
 import { log } from 'console';
 export const applications = [
     "ID",
