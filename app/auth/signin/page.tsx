@@ -10,6 +10,7 @@ import Image from "next/image"
 
 
 export default function Login() {
+  const [SignInUser, setSignInUser] = useState(false)
   const session = useSession()
   const router = useRouter()
   const [data, setData] = useState({
@@ -27,6 +28,8 @@ export default function Login() {
 
   const loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setSignInUser(true)
+    // console.log("data", data);
     signIn('credentials',
       {
         ...data, redirect: false
@@ -62,8 +65,8 @@ export default function Login() {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <Image
             className="w-auto h-10 mx-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
+            src={'/Nairobiwater.png'}
+            alt="Nairobiwater"
             width={100}
             height={100}
           />
@@ -139,6 +142,8 @@ export default function Login() {
             <div>
               <button
                 type="submit"
+                disabled={SignInUser}
+                // onClick={()=>setSignInUser(true)}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in

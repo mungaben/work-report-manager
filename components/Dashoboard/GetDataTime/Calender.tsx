@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Calendar from "react-calendar";
 
@@ -24,12 +24,9 @@ const Calender: React.FC<CalenderProps> = ({ settoggle, toggle }) => {
 
   console.log("selectedDate", selectedDate);
 
-  const handleDateChange = (
-    value: Date | Date[],
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    const date = Array.isArray(value) ? value[0] : value;
+  const handleDateChange = ( ) => {
+    // event.preventDefault();
+    const date = ActualDtae;
     console.log("date", date);
 
     setDate(date);
@@ -39,6 +36,9 @@ const Calender: React.FC<CalenderProps> = ({ settoggle, toggle }) => {
   };
 
   const TodayDate = dayjs().endOf("day").toDate();
+  useEffect(() => {
+    handleDateChange();
+  }, [ActualDtae]);
 
   return (
     <div className=" transition animate-bounce delay-[2000] hover:animate-none  hover:delay-500">
@@ -47,9 +47,7 @@ const Calender: React.FC<CalenderProps> = ({ settoggle, toggle }) => {
           Selected Date: {selectedDate.toLocaleDateString()}
         </h1>
         <Calendar
-          onChange={() => {
-            handleDateChange;
-          }}
+          onChange={() => setActualDtae(new Date())}
           value={selectedDate}
           maxDate={TodayDate}
         />

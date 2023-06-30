@@ -8,6 +8,7 @@ import Link from "next/link"
 import Image from "next/image"
 
 export default function Register() {
+  const [RegisterUser, setRegisterUser] = useState(false)
     const router = useRouter()
     const [data, setData] = useState({
          name: '',
@@ -17,6 +18,7 @@ export default function Register() {
 
          const registerUser = async (e:React.FormEvent<HTMLFormElement>) => {
             e.preventDefault()
+            setRegisterUser(true)
             axios.post('/api/User', data)
             .then((datas) => {
               
@@ -35,8 +37,8 @@ export default function Register() {
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <Image
               className="w-auto h-10 mx-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Your Company"
+              src={'/Nairobiwater.png'}
+              alt="Nairobi water"
               width={100}
               height={100}
             />
@@ -109,6 +111,8 @@ export default function Register() {
               <div>
                 <button
                   type="submit"
+                  disabled={RegisterUser}
+                  // onClick={()=>setRegisterUser(true)}
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Register
