@@ -24,7 +24,7 @@ const Calender: React.FC<CalenderProps> = ({ settoggle, toggle }) => {
 
   console.log("selectedDate", selectedDate);
 
-  const handleDateChange = ( ) => {
+  const handleDateChange = () => {
     // event.preventDefault();
     const date = ActualDtae;
     console.log("date", date);
