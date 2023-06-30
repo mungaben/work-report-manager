@@ -36,7 +36,7 @@ import Image from 'next/image'
 import React, { useCallback, useEffect } from 'react'
 import { ActivityTypes } from '@/app/utils/Types/Mytypes'
 import {useSession}  from 'next-auth/react'
-import Session from '@/app/Sessions/Session'
+
 interface User {
     id?: string | null | undefined;
     name?: string | null | undefined;
