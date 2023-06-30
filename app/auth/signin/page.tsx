@@ -38,7 +38,7 @@ export default function Login() {
         if (callback?.error && !callback.ok) {
          
           toast.error(callback.error)
-           router.push('http://localhost:3000/auth/register')
+           router.push('/auth/register')
           // console.log("error" );
 
 

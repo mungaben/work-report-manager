@@ -27,7 +27,7 @@ type MyDataType =
 
 
 const ActivityData = () => {
-const url="http://localhost:3000/api/Reports"
+const url="/api/Reports"
 const [ActivtyData, setActivtyData] = useState<MyDataType[]>([])
 const [Yesterdays, setYesterdays] = useState([])
 const [SelectedDtae, setSelectedDtae] = useState<MyDataType[]>([])

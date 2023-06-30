@@ -29,7 +29,7 @@ export const applications = [
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 const AnalyticCards = async () => {
-  const url = "http://localhost:3000/api/Reports";
+  const url = "/api/Reports";
   const { report, setReport } = useReportStore();
   console.log("reportStore", report);
 

@@ -211,7 +211,7 @@ const TabaleRow = ({keys}:{keys:number}) => {
 
     const jsonData = JSON.stringify(tabledata[0]);
 
-    fetch("http://localhost:3000/api/Reports", {
+    fetch("/api/Reports", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

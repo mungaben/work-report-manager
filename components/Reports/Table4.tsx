@@ -68,7 +68,7 @@ const Table4 = () => {
     const [ChagedValue, setChagedValue] = useState<number | undefined>()
 
     const data = async () => {
-        axios.get('http://localhost:3000/api/Reports').then((res) => {
+        axios.get('/api/Reports').then((res) => {
             settabledata(res.data);
             console.log(res.data);
         });
@@ -150,7 +150,7 @@ const Table4 = () => {
         console.log("datasavcopy", datasavcopy);
         // get index 
         const indextr = tabledata?.findIndex((data) => data.id === id)
-        indextr && axios.delete(`http://localhost:3000/api/Reports/${id}`).then((res) => {
+        indextr && axios.delete(`/api/Reports/${id}`).then((res) => {
             console.log("res", res.data);
            
             
@@ -218,7 +218,7 @@ const Table4 = () => {
         const datatopost = tabledata[id]
         console.log("data", datatopost);
         // post data to database on cleick edit
-       const posteddata= await  axios.put("http://localhost:3000/api/Reports",datatopost
+       const posteddata= await  axios.put("/api/Reports",datatopost
         ).then((resdata) => {
             console.log("resdata", resdata);
         }).catch((error) => {

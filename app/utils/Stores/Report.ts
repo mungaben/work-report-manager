@@ -8,7 +8,7 @@ import { ReportTypes } from '../Types/Mytypes';
 import axios from 'axios';
 
 
-const url = "http://localhost:3000/api/Reports"
+const url = "/api/Reports"
 
 interface ReportStoreTypes {
     report: ReportTypes[];

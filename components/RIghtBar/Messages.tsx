@@ -36,7 +36,7 @@ const Messages = () => {
  const userid=session?.user?.id
  console.log("userid",userid);
  
-  const url = "http://localhost:3000/api/Messages"
+  const url = "/api/Messages"
   const { message, addMessage, deleteMessage, setMessage } = useMessageStore()
   console.log("meassge",message);
   const inboxmessages = message.filter((item) => item.receiver?.id === userid)

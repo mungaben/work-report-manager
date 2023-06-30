@@ -5,7 +5,7 @@ import axios from 'axios';
 import { getSession } from 'next-auth/react';
 
 // const url = "http://localhost:3000/api/Massages";
-const url = "http://localhost:3000/api/Messages"
+const url = "/api/Messages"
 
 interface MessageStoreTypes {
     message: Message[];

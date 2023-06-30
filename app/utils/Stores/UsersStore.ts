@@ -5,7 +5,7 @@ import { ReportTypes, User } from '../Types/Mytypes';
 
 import axios from 'axios';
 
-const url = "http://localhost:3000/api/User"
+const url = "/api/User"
 
 interface UserTypes {
     user: User[];
