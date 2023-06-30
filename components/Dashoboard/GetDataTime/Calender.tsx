@@ -47,7 +47,7 @@ const Calender: React.FC<CalenderProps> = ({ settoggle, toggle }) => {
           Selected Date: {selectedDate.toLocaleDateString()}
         </h1>
         <Calendar
-          onChange={() => setActualDtae(new Date())}
+          onChange={(date) => setActualDtae(new Date())}
           value={selectedDate}
           maxDate={TodayDate}
         />
